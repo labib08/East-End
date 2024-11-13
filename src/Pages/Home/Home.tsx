@@ -1,6 +1,6 @@
 import WelcomePage from "../../Components/WelcomePage/WelcomePage"
 import { locationData } from "../../Data/Location"
-import './Home.css'
+
 const Home = () => {
   return (
     <div>
