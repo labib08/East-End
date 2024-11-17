@@ -135,7 +135,7 @@ export const itemData: Items[]= [
         name: "Lungo",
         image: flat_white,
         price: 4.5,
-        description: "",
+        description: "A type of espresso made with more water, resulting in a larger, milder coffee with a smooth, rich flavor. It’s less intense than a traditional espresso, offering a well-balanced taste ideal for those who prefer a less concentrated coffee experience.",
         type: "Coffee",
     },
     {
@@ -143,7 +143,7 @@ export const itemData: Items[]= [
         name: "Cold brew",
         image: flat_white,
         price: 4.5,
-        description: "",
+        description: "A coffee made by steeping coarsely ground coffee beans in cold water for an extended period, typically 12-24 hours. The result is a smooth, less acidic coffee with a rich, mellow flavor, often served over ice for a refreshing, energizing drink.",
         type: "Coffee",
     },
     {
@@ -151,7 +151,7 @@ export const itemData: Items[]= [
         name: "Iced coffee",
         image: flat_white,
         price: 4.5,
-        description: "",
+        description: "A chilled coffee beverage made by brewing coffee and then cooling it down with ice. It offers a refreshing, bold flavor, perfect for warm weather, and can be sweetened or flavored with milk, cream, or syrups for a customizable taste.",
         type: "Coffee",
     },
     {
@@ -159,7 +159,7 @@ export const itemData: Items[]= [
         name: "Cappuccino",
         image: flat_white,
         price: 4.5,
-        description: "",
+        description: "A classic Italian coffee drink made with equal parts espresso, steamed milk, and frothed milk. Known for its creamy texture and rich flavor, it’s typically topped with a dusting of cocoa or cinnamon for an extra touch of indulgence.",
         type: "Coffee",
     },
     {
@@ -167,7 +167,7 @@ export const itemData: Items[]= [
         name: "Doppio",
         image: flat_white,
         price: 4.5,
-        description: "",
+        description: "A double shot of espresso, offering a richer, bolder flavor than a single shot. It’s made by extracting twice the amount of coffee, resulting in a stronger and more intense espresso experience. Ideal for coffee lovers who prefer a more robust taste.",
         type: "Coffee",
     },
     {
@@ -175,7 +175,7 @@ export const itemData: Items[]= [
         name: "Cappuccino",
         image: flat_white,
         price: 4.5,
-        description: "",
+        description: "A popular coffee drink made with equal parts espresso, steamed milk, and frothed milk. Known for its creamy texture and rich, bold flavor, it’s often topped with a light dusting of cocoa or cinnamon for an extra touch of indulgence.",
         type: "Coffee",
     },
     {
@@ -183,7 +183,7 @@ export const itemData: Items[]= [
         name: "Irish coffee",
         image: flat_white,
         price: 4.5,
-        description: "",
+        description: "A warm cocktail made with hot coffee, Irish whiskey, sugar, and topped with a layer of lightly whipped cream. Its rich, smooth flavor combines the boldness of coffee with the warmth of whiskey, making it a comforting and indulgent drink.",
         type: "Coffee",
     },
     {
@@ -191,7 +191,7 @@ export const itemData: Items[]= [
         name: "Red Eye",
         image: flat_white,
         price: 4.5,
-        description: "",
+        description: "A coffee drink made by combining a regular drip coffee with a shot of espresso. This bold, high-energy beverage offers an extra caffeine kick, perfect for those looking for a stronger, more invigorating coffee experience.",
         type: "Coffee",
     },
     {
@@ -199,7 +199,7 @@ export const itemData: Items[]= [
         name: "Drip coffee",
         image: flat_white,
         price: 4.5,
-        description: "",
+        description: "A popular brewing method where hot water is poured over ground coffee, allowing it to filter through a coffee maker or drip cone. The result is a smooth, flavorful cup of coffee with a clean taste, perfect for everyday enjoyment.",
         type: "Coffee",
     },
     {
@@ -207,7 +207,7 @@ export const itemData: Items[]= [
         name: "Double Espresso",
         image: flat_white,
         price: 4.5,
-        description: "",
+        description: "A coffee made by brewing two shots of espresso from the same amount of ground coffee. It offers a stronger, more intense flavor compared to a single shot, providing a bold, concentrated coffee experience.",
         type: "Coffee",
     },
     {
@@ -215,7 +215,7 @@ export const itemData: Items[]= [
         name: "Cheesecake",
         image: red_velvet,
         price: 7.5,
-        description: "",
+        description: "A timeless dessert made with a smooth, velvety filling set atop a buttery, crumbly crust. Perfect for any occasion, it can be enjoyed plain or topped with a variety of fruits, chocolate, or caramel for added flavor.",
         type: "Dessert",
     },
     {
@@ -223,7 +223,7 @@ export const itemData: Items[]= [
         name: "Red velvet cake",
         image: red_velvet,
         price: 10.0,
-        description: "",
+        description: "A striking, vibrant dessert known for its rich, velvety texture and distinct red color. With a mild cocoa flavor and a hint of tanginess from cream cheese or buttercream frosting, it's a perfect treat for celebrations and special occasions.",
         type: "Dessert",
     },
     {
@@ -231,7 +231,7 @@ export const itemData: Items[]= [
         name: "Chocolate cake",
         image: red_velvet,
         price: 8.5,
-        description: "",
+        description: "A decadent and moist dessert made with rich cocoa, offering a deep, satisfying chocolate flavor. Often layered with creamy frosting or ganache, it’s a beloved treat for any chocolate lover.",
         type: "Dessert",
     },
     {
@@ -239,7 +239,7 @@ export const itemData: Items[]= [
         name: "Vanilla cake",
         image: red_velvet,
         price: 8.5,
-        description: "",
+        description: "A light, fluffy dessert with a soft, sweet flavor. Made with simple ingredients, it has a delicate taste that pairs beautifully with a variety of frostings, from creamy buttercream to rich chocolate ganache.",
         type: "Dessert",
     },
     {
@@ -247,7 +247,7 @@ export const itemData: Items[]= [
         name: "Tiramisu",
         image: red_velvet,
         price: 12,
-        description: "",
+        description: "A classic Italian dessert made with layers of coffee-soaked ladyfingers, rich mascarpone cheese, and a dusting of cocoa powder. Its perfect balance of sweet and espresso flavors, combined with a creamy texture, makes it an irresistible treat for any occasion.",
         type: "Dessert",
     },
     {
@@ -255,7 +255,7 @@ export const itemData: Items[]= [
         name: "Maltesers tiramisu",
         image: red_velvet,
         price: 12.5,
-        description: "",
+        description: "A delicious twist on the classic Italian dessert, featuring layers of coffee-soaked ladyfingers, creamy mascarpone, and crunchy Maltesers for added texture and flavor. The perfect combination of sweet, rich, and slightly malty, it’s a unique treat that’s sure to impress.",
         type: "Dessert",
     },
     {
@@ -263,7 +263,7 @@ export const itemData: Items[]= [
         name: "Brownie",
         image: red_velvet,
         price: 5.0,
-        description: "",
+        description: "A rich, fudgy dessert with a dense, chocolatey texture. Often topped with nuts or a dusting of powdered sugar, it’s a perfect balance of sweetness and decadence, ideal for any chocolate lover.",
         type: "Dessert",
     },
     {
@@ -271,7 +271,7 @@ export const itemData: Items[]= [
         name: "Chocolate Mousse",
         image: red_velvet,
         price: 8.5,
-        description: "",
+        description: "A rich, velvety dessert made with creamy chocolate, whipped cream, and eggs, creating a light, airy texture. Its indulgent chocolate flavor makes it a perfect treat for any occasion.",
         type: "Dessert",
     },
     {
@@ -279,7 +279,7 @@ export const itemData: Items[]= [
         name: "Lemon cake",
         image: red_velvet,
         price: 4.5,
-        description: "",
+        description: "A light, moist dessert with a refreshing citrus flavor. Made with fresh lemon zest and juice, it offers a perfect balance of sweetness and tang, often paired with a creamy frosting or glaze for an extra burst of flavor.",
         type: "Dessert",
     },
     {
@@ -287,7 +287,7 @@ export const itemData: Items[]= [
         name: "Butter cake",
         image: red_velvet,
         price: 4.5,
-        description: "",
+        description: "A rich, moist dessert made with simple ingredients, including butter, sugar, eggs, and flour. Its tender crumb and deliciously buttery flavor make it a timeless treat, perfect on its own or paired with frosting, fruits, or a dusting of powdered sugar.",
         type: "Dessert",
     },
     {
@@ -295,7 +295,7 @@ export const itemData: Items[]= [
         name: "Sticky Date Pudding",
         image: red_velvet,
         price: 7.0,
-        description: "",
+        description: "A warm, indulgent dessert made with moist dates, brown sugar, and a rich toffee sauce. Often served with vanilla ice cream or cream, its deep, sweet flavor and comforting texture make it a perfect treat for any occasion.",
         type: "Dessert",
     },
     {
@@ -303,7 +303,7 @@ export const itemData: Items[]= [
         name: "Mud Cake",
         image: red_velvet,
         price: 9.0,
-        description: "",
+        description: "A dense, rich chocolate cake with a fudgy, moist texture. Made with dark chocolate and often paired with a creamy frosting or ganache, it’s a decadent treat perfect for special occasions or any chocolate lover.",
         type: "Dessert",
     },
     {
@@ -311,7 +311,7 @@ export const itemData: Items[]= [
         name: "Amaretto brulee",
         image: red_velvet,
         price: 8.5,
-        description: "",
+        description: "A creamy, indulgent dessert made with a rich custard base flavored with amaretto liqueur. Topped with a perfectly caramelized sugar crust, it offers a delightful contrast of smoothness and crunch, making it a luxurious treat for any occasion.",
         type: "Dessert",
     },
     {
@@ -319,15 +319,15 @@ export const itemData: Items[]= [
         name: "Black forest trifles",
         image: red_velvet,
         price: 9.5,
-        description: "",
+        description: "A layered dessert featuring rich chocolate cake, sweetened cherries, whipped cream, and a hint of chocolate shavings. A twist on the classic Black Forest cake, this indulgent treat offers a perfect balance of flavors and textures in every spoonful.",
         type: "Dessert",
     },
     {
-        id: "39",
+        id: "40",
         name: "Chocolate Peanut Butter Cake",
         image: red_velvet,
         price: 5.5,
-        description: "",
+        description: "A a decadent dessert that combines rich, moist chocolate cake with a creamy peanut butter filling. It’s the perfect treat for those who love the irresistible combination of chocolate and peanut butter.",
         type: "Dessert",
     },
 ];
