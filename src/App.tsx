@@ -5,8 +5,9 @@ import { Navbar } from './Components/Navbar/Navbar';
 import Cart from './Pages/Cart/Cart';
 import Home from './Pages/Home/Home';
 import HomeCategory from './Pages/HomeCategory/HomeCategory';
-import LoginSignUp from './Pages/LoginSignUp/LoginSignUp';
+import Login from './Pages/Login/Login';
 import Product from './Pages/Product/Product';
+import SignUp from './Pages/SignUp/SignUp';
 function App() {
   return (
     <>
@@ -22,7 +23,8 @@ function App() {
             <Route path = ":productID" element = {<Product/>}/>
           </Route>
           <Route path = "/cart" element = {<Cart/>}/>
-          <Route path = "/login" element = {<LoginSignUp/>}/>
+          <Route path = "/login" element = {<Login/>}/>
+          <Route path = "/signup" element = {<SignUp/>}/>
         </Routes>
         </BrowserRouter>
       </div>

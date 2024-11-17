@@ -19,9 +19,12 @@ export const Navbar: React.FC = () => {
 
     <div className="flex justify-around shadow-md py-[10px]">
       <div className="flex items-center gap-2.5">
-        <img src={logo} alt="" className="w-[70px] h-[70px]" />
-        <p className="text-custom-red text-[40px] font-extrabold">East End</p>
-        <p className="text-custom-red flex items-center justify-center mt-[-20px] ml-[-10px]">TM</p>
+        <Link to = "/">
+          <img src={logo} alt="" className="w-[70px] h-[70px]" />
+        </Link>
+        <Link to = "/"><p className="text-custom-red text-[40px] font-extrabold">East End</p></Link>
+        <Link to = "/"><p className="text-custom-red flex items-center justify-center mt-[-20px] ml-[-10px]">TM</p></Link>
+
       </div>
       <ul className="flex items-center list-none gap-50 text-black text-[20px] font-medium">
         <li onClick={() => onClickPage('home')}>

@@ -5,7 +5,7 @@ import './Footer.css';
 
 const Footer: React.FC = () => {
   return (
-    <div className='footer bg-custom-red mt-[40px]'>
+    <div className='footer bg-[#372622] mt-[40px]'>
         <div className='flex justify-between items-center h-[12vh]'>
             <div>
                 <p className='text-white ml-[110px]'>Copyright 2012 - 2024 | All Rights Reserved | Powered by |</p>

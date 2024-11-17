@@ -42,6 +42,21 @@ code {
     transform: translateX(0);
   }
 }
+
+.fade-in-signup {
+  animation: fadeInSignUp 1.5s;
+}
+@keyframes fadeInSignUp {
+  0% {
+    opacity: 0;
+    transform: translateY(35%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
