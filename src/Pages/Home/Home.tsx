@@ -1,7 +1,7 @@
 import WelcomePage from "../../Components/WelcomePage/WelcomePage"
 import { locationData } from "../../Data/Location"
 
-const Home = () => {
+const Home: React.FC = () => {
   return (
     <div>
       <WelcomePage/>

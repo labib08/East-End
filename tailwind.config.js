@@ -14,6 +14,7 @@ module.exports = {
         3: '3px',
         40: '40px',
       },
+
     },
   },
   plugins: [],

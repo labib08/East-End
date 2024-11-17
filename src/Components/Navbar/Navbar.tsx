@@ -58,7 +58,7 @@ export const Navbar: React.FC = () => {
         <Link to='/cart'>
           <img src={cart} alt="" className="w-10 h-auto" />
         </Link>
-        <div className="w-5 h-5 flex justify-center items-center mt-[-43px] ml-[-45px] rounded-full text-[14px] bg-[rgb(92,22,22)] text-white">
+        <div className="w-5 h-5 flex justify-center items-center mt-[-43px] ml-[-45px] rounded-full text-[14px] bg-custom-red text-white">
           0
         </div>
       </div>
