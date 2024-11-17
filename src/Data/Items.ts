@@ -1,5 +1,6 @@
 import flat_white from '../Assets/flat_white.jpeg';
-interface Coffee {
+import red_velvet from '../Assets/red_velvet.jpg';
+interface Items {
     id: string;
     name: string;
     image: string;
@@ -8,7 +9,7 @@ interface Coffee {
     type: string;
 }
 
-export const coffeeData: Coffee[]= [
+export const itemData: Items[]= [
     {
         id: "1",
         name: "Cappuccino",
@@ -208,5 +209,125 @@ export const coffeeData: Coffee[]= [
         price: 4.5,
         description: "",
         type: "Coffee",
+    },
+    {
+        id: "26",
+        name: "Cheesecake",
+        image: red_velvet,
+        price: 7.5,
+        description: "",
+        type: "Dessert",
+    },
+    {
+        id: "27",
+        name: "Red velvet cake",
+        image: red_velvet,
+        price: 10.0,
+        description: "",
+        type: "Dessert",
+    },
+    {
+        id: "28",
+        name: "Chocolate cake",
+        image: red_velvet,
+        price: 8.5,
+        description: "",
+        type: "Dessert",
+    },
+    {
+        id: "29",
+        name: "Vanilla cake",
+        image: red_velvet,
+        price: 8.5,
+        description: "",
+        type: "Dessert",
+    },
+    {
+        id: "30",
+        name: "Tiramisu",
+        image: red_velvet,
+        price: 12,
+        description: "",
+        type: "Dessert",
+    },
+    {
+        id: "31",
+        name: "Maltesers tiramisu",
+        image: red_velvet,
+        price: 12.5,
+        description: "",
+        type: "Dessert",
+    },
+    {
+        id: "32",
+        name: "Brownie",
+        image: red_velvet,
+        price: 5.0,
+        description: "",
+        type: "Dessert",
+    },
+    {
+        id: "33",
+        name: "Chocolate Mousse",
+        image: red_velvet,
+        price: 8.5,
+        description: "",
+        type: "Dessert",
+    },
+    {
+        id: "34",
+        name: "Lemon cake",
+        image: red_velvet,
+        price: 4.5,
+        description: "",
+        type: "Dessert",
+    },
+    {
+        id: "35",
+        name: "Butter cake",
+        image: red_velvet,
+        price: 4.5,
+        description: "",
+        type: "Dessert",
+    },
+    {
+        id: "36",
+        name: "Sticky Date Pudding",
+        image: red_velvet,
+        price: 7.0,
+        description: "",
+        type: "Dessert",
+    },
+    {
+        id: "37",
+        name: "Mud Cake",
+        image: red_velvet,
+        price: 9.0,
+        description: "",
+        type: "Dessert",
+    },
+    {
+        id: "38",
+        name: "Amaretto brulee",
+        image: red_velvet,
+        price: 8.5,
+        description: "",
+        type: "Dessert",
+    },
+    {
+        id: "39",
+        name: "Black forest trifles",
+        image: red_velvet,
+        price: 9.5,
+        description: "",
+        type: "Dessert",
+    },
+    {
+        id: "39",
+        name: "Chocolate Peanut Butter Cake",
+        image: red_velvet,
+        price: 5.5,
+        description: "",
+        type: "Dessert",
     },
 ];

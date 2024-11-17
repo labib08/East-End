@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { coffeeData } from '../../Data/Coffee';
+import { itemData } from '../../Data/Items';
 import Coffee from '../Coffee/Coffee';
+import Dessert from '../Dessert/Dessert';
 interface Props {
     category: string
 }
@@ -23,7 +24,7 @@ const HomeCategory = ({category}: Props) => {
       if (prev[itemID] > 1) {
         return { ...prev, [itemID]: prev[itemID] - 1 };
       } else {
-        const { [itemID]: _, ...remainingItems } = prev; // Remove item from cart if quantity <= 1
+        const { [itemID]: _, ...remainingItems } = prev;
         return remainingItems;
       }
     });
@@ -31,11 +32,20 @@ const HomeCategory = ({category}: Props) => {
   useEffect(() => {
     console.log(cartItems);
   }, [cartItems])
+
+  const coffeeData = itemData.filter(item => item.type === "Coffee");
+  const dessertData = itemData.filter(item => item.type === "Dessert");
+
   return (
     <div>
       {category === 'coffee' && (
         <>
         <Coffee coffeeData={coffeeData} addToCart = {addToCart} removeFromCart = {removeFromCart} cartItems = {cartItems} setCartItems = {setCartItems}/>
+        </>
+      )}
+      {category === 'dessert' && (
+        <>
+        <Dessert dessertData={dessertData} addToCart = {addToCart} removeFromCart = {removeFromCart} cartItems = {cartItems} setCartItems = {setCartItems}/>
         </>
       )}
     </div>
