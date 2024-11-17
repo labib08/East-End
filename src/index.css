@@ -1,4 +1,4 @@
-/**
+
 * {
   margin: 0;
 }
@@ -15,7 +15,33 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-*/
+.fade-in-home {
+  animation: fadeInHome 2s;
+}
+
+@keyframes fadeInHome {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 1.5s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

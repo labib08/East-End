@@ -3,7 +3,7 @@ import intro_photo_2 from '../../Assets/intro_photo_2.webp';
 import intro_photo_3 from '../../Assets/intro_photo_3.avif';
 import intro_photo_4 from '../../Assets/intro_photo_4.webp';
 
-const WelcomePage = () => {
+const WelcomePage : React.FC = () => {
   const images = [intro_photo_2, intro_photo_3, intro_photo_4];
   const [currImage, setCurrImage] = useState<number>(0);
   const [fade, setFade] = useState<boolean>(true);
@@ -39,9 +39,9 @@ const WelcomePage = () => {
       style={backgroundStyle}
     >
       <div className="absolute flex flex-col items-start gap-[1.5vw] max-w-[50%] bottom-[10%] left-[6vw]">
-        <h2 className='font-medium text-white text-[max(4.5vw,22px)]'>Order your favorite coffee here</h2>
-        <p className='text-white text-[1vw]'>Choose from a diverse range of coffees and desserts featuring the World's finest coffee beans</p>
-        <button className='border-none text-black p-[1vw_2.3vw] bg-white text-[max(1vw,13px)] rounded-full'>View Coffee</button>
+        <h2 className='font-medium text-white text-[max(4.5vw,22px)] transition-[all_0.4s] fade-in'>Order your favorite coffee here</h2>
+        <p className='text-white text-[1vw] transition-[all_0.4s] fade-in'>Choose from a diverse range of coffees and desserts featuring the World's finest coffee beans</p>
+        <button className='border-none text-black p-[1vw_2.3vw] bg-white text-[max(1vw,13px)] rounded-full transition-[all_0.4s] fade-in'>View Coffee</button>
       </div>
     </div>
   )
