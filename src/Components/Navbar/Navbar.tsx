@@ -59,9 +59,9 @@ export const Navbar: React.FC = () => {
           </button>
         </Link>
         <Link to='/cart'>
-          <img src={cart} alt="" className="w-10 h-auto" />
+          <img onClick = {() => onClickPage('cart')} src={cart} alt="" className="w-10 h-auto cursor-pointer" />
         </Link>
-        <div className="w-5 h-5 flex justify-center items-center mt-[-43px] ml-[-45px] rounded-full text-[14px] bg-custom-red text-white">
+        <div  onClick = {() => onClickPage('cart')} className="w-5 h-5 flex justify-center items-center mt-[-43px] ml-[-45px] rounded-full text-[14px] bg-custom-red text-white cursor-pointer">
           0
         </div>
       </div>

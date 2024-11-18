@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { itemData } from '../../Data/Items';
+import Cart from '../Cart/Cart';
 import Coffee from '../Coffee/Coffee';
 import Dessert from '../Dessert/Dessert';
 interface Props {
@@ -9,7 +10,7 @@ interface CartItems {
   [key: string]: number;
 };
 
-const HomeCategory = ({category}: Props) => {
+const HomeCategory: React.FC<Props> = ({category}: Props) => {
   const [cartItems, setCartItems] = useState<CartItems>({});
 
   const addToCart = (itemID: string): void => {
@@ -46,6 +47,11 @@ const HomeCategory = ({category}: Props) => {
       {category === 'dessert' && (
         <>
         <Dessert dessertData={dessertData} addToCart = {addToCart} removeFromCart = {removeFromCart} cartItems = {cartItems} setCartItems = {setCartItems}/>
+        </>
+      )}
+      {category === "cart" && (
+        <>
+        <Cart itemData = {itemData} addToCart = {addToCart} removeFromCart = {removeFromCart} cartItems = {cartItems} setCartItems = {setCartItems}/>
         </>
       )}
     </div>
