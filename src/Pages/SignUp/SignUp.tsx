@@ -76,7 +76,7 @@ const SignUp: React.FC = () => {
           <div className='text-white text-xs mb-2.5 max-sm:text-[14px]'>
             <p>By clicking on Continue you automatically agree to the terms and conditions</p>
           </div>
-          <button className='w-full p-[15px] text-white bg-[#372622] text-[18px] font-medium cursor-pointer rounded-[25px] transition-colors duration-300 ease-in-out hover:bg-black max-sm:p-[10px]'>Sign Up</button>
+          <button className='w-full p-[15px] text-white bg-[#372622] text-[18px] font-medium cursor-pointer rounded-[25px] transition-colors duration-300 ease-in-out border-[2px] border-[#372622] hover:bg-transparent hover:border-[white] max-sm:p-[10px]'>Sign Up</button>
         </form>
         <p className="mt-[20px] text-[18px] text-white max-sm:text-[14px]">Already have an account? <span className='text-white font-semibold'><Link to = "/login" className='text-white font-semibold no-underline inline-block transition-transform transform hover:scale-110'>Login</Link></span></p>
       </div>

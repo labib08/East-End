@@ -51,7 +51,7 @@ const Login: React.FC = () => {
                 required
                 />
         </div>
-        <button className='w-full p-[15px] text-white bg-[#372622] text-[18px] font-medium cursor-pointer rounded-[25px] transition-colors duration-300 ease-in-out hover:bg-black max-sm:p-[10px]'>Login</button>
+        <button className='w-full p-[15px] text-white bg-[#372622] text-[18px] font-medium cursor-pointer rounded-[25px] transition-colors duration-300 ease-in-out border-[2px] border-[#372622] hover:bg-transparent hover:border-[white] max-sm:p-[10px]'>Login</button>
         </form>
         <p className="mt-[20px] text-[18px] text-white max-sm:text-[14px]">Don't have an account? <span className='text-white font-semibold'><Link to = "/signup" className='text-white font-semibold no-underline inline-block transition-transform transform hover:scale-110'>Sign Up</Link></span></p>
         </div>
