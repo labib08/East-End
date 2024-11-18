@@ -6,13 +6,15 @@ import Dessert from '../Dessert/Dessert';
 interface Props {
     category: string
 }
-interface CartItems {
-  [key: string]: number;
-};
 
 const HomeCategory: React.FC<Props> = ({category}: Props) => {
-  const [cartItems, setCartItems] = useState<CartItems>({});
-
+  const [cartItems, setCartItems] = useState<Record<string, number>>(() => {
+    const savedCart = localStorage.getItem("cartItems");
+    return savedCart ? JSON.parse(savedCart) : {};
+  });
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
   const addToCart = (itemID: string): void => {
     setCartItems((prev) => ({
       ...prev,
@@ -30,6 +32,14 @@ const HomeCategory: React.FC<Props> = ({category}: Props) => {
       }
     });
   };
+
+  const getTotal = (): number => {
+    return Object.entries(cartItems).reduce((total, [itemId, quantity]) => {
+      const item = itemData.find((item) => item.id === itemId);
+      return item ? total + item.price * quantity : total;
+    }, 0);
+  };
+
   useEffect(() => {
     console.log(cartItems);
   }, [cartItems])
@@ -51,7 +61,7 @@ const HomeCategory: React.FC<Props> = ({category}: Props) => {
       )}
       {category === "cart" && (
         <>
-        <Cart itemData = {itemData} addToCart = {addToCart} removeFromCart = {removeFromCart} cartItems = {cartItems} setCartItems = {setCartItems}/>
+        <Cart itemData = {itemData} addToCart = {addToCart} removeFromCart = {removeFromCart} cartItems = {cartItems} setCartItems = {setCartItems} getTotal = {getTotal}/>
         </>
       )}
     </div>
