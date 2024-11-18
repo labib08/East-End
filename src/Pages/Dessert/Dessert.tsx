@@ -16,7 +16,7 @@ interface Props {
     cartItems: CartItems;
     setCartItems: React.Dispatch<React.SetStateAction<CartItems>>;
 }
-const Dessert = ({dessertData, addToCart, removeFromCart, cartItems, setCartItems}: Props) => {
+const Dessert: React.FC<Props> = ({dessertData, addToCart, removeFromCart, cartItems, setCartItems}: Props) => {
   return (
     <div className="dessert-display">
         <div className="flex items-center justify-center bg-custom-red min-h-[7vw]">
