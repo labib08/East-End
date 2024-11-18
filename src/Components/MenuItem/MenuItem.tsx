@@ -21,7 +21,7 @@ const MenuItem = ({id, name, image, price, description, addToCart, removeFromCar
   return (
     <div className="w-full mx-auto rounded-[15px] shadow-[0px_0px_10px_#00000015] min-h-[480px] flex flex-col transition-[all_0.4s] fade-in">
         <div className="w-full rounded-t-[15px]">
-            <img className="w-full rounded-t-[15px]" src = {image} alt = ""/>
+            <img className="w-full rounded-t-[15px]  h-[170px]" src = {image} alt = ""/>
         </div>
         <div className="p-[20px] flex flex-col flex-grow justify-between">
         <div className="mb-[10px]">
