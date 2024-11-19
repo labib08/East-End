@@ -40,24 +40,29 @@ const Cart: React.FC<Props> = ({itemData, addToCart, removeFromCart, cartItems, 
           <p>Remove</p>
         </div>
         <br />
-        {itemData.map((item, index) =>{
-          if (cartItems[item.id] > 0) {
-            return (
-              <div>
-                <div className='cart-items-item'>
-                  <img className ='item-image' src = {item.image} alt = "" />
-                  <p> {item.name} </p>
-                  <p> ${item.price.toFixed(1)} </p>
-                  <p> {cartItems[item.id]} </p>
-                  <p> ${(item.price * cartItems[item.id]).toFixed(1)} </p>
-                  <img onClick={() => {removeFromCart(item.id)}} src={cross} className='cross' alt=''/>
-                </div>
-                <hr/>
-              </div>
-            )
-          }
+        {itemData
+        .filter((item) => cartItems[item.id] > 0)
+        .map((item, index) => (
+          <div key={index}>
+            <div className="cart-items-item">
+              <img className="item-image" src={item.image} alt="" />
+              <p>{item.name}</p>
+              <p>${item.price.toFixed(1)}</p>
+              <p>{cartItems[item.id]}</p>
+              <p>${(item.price * cartItems[item.id]).toFixed(1)}</p>
+              <img
+                onClick={() => {
+                  removeFromCart(item.id);
+                }}
+                src={cross}
+                className="cross"
+                alt=""
+              />
+            </div>
+            <hr />
+          </div>
+        ))}
 
-        })}
       </div>
         <div className="cart-bottom">
           <div className="cart-total">

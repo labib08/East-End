@@ -1,5 +1,5 @@
 import MenuItem from "../../Components/MenuItem/MenuItem";
-interface Dessert {
+interface DessertType {
     id: string;
     name: string;
     image: string;
@@ -10,7 +10,7 @@ interface CartItems {
     [key: string]: number;
   };
 interface Props {
-    dessertData: Dessert[];
+    dessertData: DessertType[];
     addToCart: (itemID: string) => void;
     removeFromCart: (itemID: string) => void;
     cartItems: CartItems;

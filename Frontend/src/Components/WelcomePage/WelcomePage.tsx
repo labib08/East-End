@@ -18,7 +18,7 @@ const WelcomePage : React.FC = () => {
     }, 6000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [images.length]);
 
   const backgroundStyle: React.CSSProperties = {
     backgroundImage: `url(${images[currImage]})`,

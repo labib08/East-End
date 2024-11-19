@@ -1,6 +1,6 @@
 import MenuItem from "../../Components/MenuItem/MenuItem";
 import './Coffee.css';
-interface Coffee {
+interface CoffeeType {
     id: string;
     name: string;
     image: string;
@@ -11,7 +11,7 @@ interface CartItems {
     [key: string]: number;
   };
 interface Props {
-    coffeeData: Coffee[];
+    coffeeData: CoffeeType[];
     addToCart: (itemID: string) => void;
     removeFromCart: (itemID: string) => void;
     cartItems: CartItems;
