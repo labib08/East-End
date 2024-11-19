@@ -8,17 +8,17 @@ const Footer: React.FC = () => {
     <div className='footer bg-[#372622] mt-[40px]'>
         <div className='flex justify-between items-center h-[12vh]'>
             <div>
-                <p className='text-white ml-[110px]'>Copyright 2012 - 2024 | All Rights Reserved | Powered by |</p>
+                <p className="footer-p text-white ml-[110px]">Copyright 2012 - 2024 | All Rights Reserved | Powered by |</p>
             </div>
             <span className="flex items-center">
                 <div className="social-icon inline-block mr-[110px]">
-                    <a className='w-[72px] h-[72px] mr-[-20px] bg-none inline-flex items-center justify-center leading-[1] relative' href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">
+                    <a className='social-icon-img w-[72px] h-[72px] mr-[-20px] bg-none inline-flex items-center justify-center leading-[1] relative' href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">
                         <img className="w-[40%] z-[2] transition-all duration-300 ease-in-out" src={link_icon} alt="" />
                     </a>
-                    <a className='w-[72px] h-[72px] mr-[-20px] bg-none inline-flex items-center justify-center leading-[1] relative' href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
+                    <a className='social-icon-img w-[72px] h-[72px] mr-[-20px] bg-none inline-flex items-center justify-center leading-[1] relative' href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
                         <img className="w-[40%] z-[2] transition-all duration-300 ease-in-out" src={facebook} alt="" />
                     </a>
-                    <a className='w-[72px] h-[72px] mr-[-20px] bg-none inline-flex items-center justify-center leading-[1] relative' href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+                    <a className='social-icon-img w-[72px] h-[72px] mr-[-20px] bg-none inline-flex items-center justify-center leading-[1] relative' href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
                         <img className="w-[40%] z-[2] transition-all duration-300 ease-in-out" src={insta} alt="" />
                     </a>
                 </div>

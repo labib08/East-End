@@ -1,4 +1,5 @@
 import MenuItem from "../../Components/MenuItem/MenuItem";
+import './Coffee.css';
 interface Coffee {
     id: string;
     name: string;
@@ -22,7 +23,7 @@ const Coffee: React.FC<Props> = ({coffeeData, addToCart, removeFromCart, cartIte
         <div className="flex items-center justify-center bg-custom-red min-h-[7vw]">
         <h2 className="text-white font-[300] text-[48px]"> Our Coffees </h2>
         </div>
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] mt-[30px] mx-[30px] gap-[30px] row-gap-[50px]">
+        <div className="menuItemCoffee grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] mt-[30px] mx-[30px] gap-[30px] row-gap-[50px]">
             {coffeeData.map((coffee, index) => {
                 return <MenuItem key={index} id={coffee.id} name = {coffee.name} image={coffee.image} price = {coffee.price} description= {coffee.description} addToCart = {addToCart} removeFromCart = {removeFromCart} cartItems = {cartItems} setCartItems = {setCartItems}/>
 

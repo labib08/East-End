@@ -1,0 +1,39 @@
+@media(max-width: 800px) {
+    .home-h2 {
+        font-size: 60px;
+    }
+    .home-branch {
+        grid-template-columns: 1fr;
+    }
+
+    .home-branch .border {
+        margin-bottom: 20px;
+    }
+
+
+    .home-branch {
+        padding: 15px;
+    }
+    .home-h3 {
+        font-size: 33px;
+    }
+    .home-p-1 {
+        font-size: 17px;
+    }
+}
+
+@media(max-width: 500px) {
+    .home-branch {
+        margin: 0 auto;
+        width: 95%;
+    }
+    .home-h2 {
+        font-size: 50px;
+    }
+    .home-h3 {
+        font-size: 25px;
+    }
+    .home-p-1 {
+        font-size: 12px;
+    }
+}
