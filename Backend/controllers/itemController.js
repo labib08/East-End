@@ -18,4 +18,16 @@ const addItem = async (req, res) => {
         res.json({success: false, message: "Error"});
     }
 }
-export default addItem;
+
+const itemList = async(req, res) => {
+    try {
+        const items = await itemModel.find({});
+        res.json({success: true, data: items})
+    }
+    catch (err) {
+        console.log(err);
+        res.json({success: false, message: "Error"});
+    }
+}
+export { addItem, itemList };
+
