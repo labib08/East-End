@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import { addItem, itemList } from "../controllers/itemController.js";
+import { addItem, itemList, removeItem } from "../controllers/itemController.js";
 
 const itemRouter = express.Router();
 
@@ -15,5 +15,6 @@ const asset = multer({storage:storage});
 
 itemRouter.post("/add", asset.single("image"), addItem);
 itemRouter.get("/list", itemList);
+itemRouter.post("/remove", removeItem);
 
 export default itemRouter;
