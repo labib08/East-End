@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Footer from './Components/Footer/Footer';
 import { Navbar } from './Components/Navbar/Navbar';
+import Admin from './Pages/Admin/Admin';
 import Home from './Pages/Home/Home';
 import HomeCategory from './Pages/HomeCategory/HomeCategory';
 import Login from './Pages/Login/Login';
@@ -22,6 +23,7 @@ function App() {
           <Route path = "/cart" element = {<HomeCategory category = "cart"/>} />
           <Route path = "/login" element = {<Login/>}/>
           <Route path = "/signup" element = {<SignUp/>}/>
+          <Route path = "/admin" element = {<Admin/>}/>
         </Routes>
         </BrowserRouter>
       </div>

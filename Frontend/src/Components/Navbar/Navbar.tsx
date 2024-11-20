@@ -61,6 +61,12 @@ export const Navbar: React.FC = () => {
           </Link>
           {setHrTag("merch")}
         </li>
+        <li onClick={() => onClickPage('admin')}>
+          <Link to="/admin" className="nav-menu-li no-underline text-black flex flex-col items-center justify-center gap-3 cursor-pointer navbar-link-tag hover:text-[rgb(83,14,14)] focus:text-[rgb(63,13,13)] transition-colors duration-400 ease-in-out">
+            Admin
+          </Link>
+          {setHrTag("admin")}
+        </li>
       </ul>
       <div className="nav-login-cart flex items-center gap-40">
         <Link to='/login'>
