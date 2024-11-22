@@ -92,7 +92,7 @@ const AddItems: React.FC = () => {
           </div>
         </div>
 
-        <button type="submit" className="max-w-[200px] px-5 py-3 border-0 rounded-lg bg-blue-500 text-white text-base font-bold cursor-pointer text-center transition-all duration-300 ease-in-out hover:bg-blue-600 hover:scale-105 active:bg-blue-700" disabled={wordCount === 0}>ADD</button>
+        <button type="submit" className="max-w-[200px] h-[50px] px-5 py-3 border-0 rounded-[50px] bg-blue-500 text-white text-base font-bold cursor-pointer text-center transition-all duration-300 ease-in-out hover:bg-blue-600 hover:scale-105 active:bg-blue-700" disabled={wordCount === 0}>ADD</button>
       </form>
     </div>
   )
