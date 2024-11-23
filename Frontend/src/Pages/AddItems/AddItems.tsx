@@ -1,4 +1,6 @@
+import axios from "axios";
 import { useState } from "react";
+import { toast } from 'react-toastify';
 import upload_photo from "../../Assets/upload_area.svg";
 
 interface AddedItem {
@@ -9,8 +11,8 @@ interface AddedItem {
 }
 
 const AddItems: React.FC = () => {
+  const url = "http://localhost:5000";
   const [image, setImage] = useState<File | null>(null);
-
   const [addedItem, setAddedItem] = useState<AddedItem>({
     name: "",
     price: "",
@@ -33,9 +35,35 @@ const AddItems: React.FC = () => {
   const wordCount = addedItem.description.trim().split(/\s+/).filter(Boolean).length;
   const wordsRemaining = wordLimit - wordCount;
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("name", addedItem.name);
+    formData.append("description", addedItem.description);
+    formData.append("price", addedItem.price);
+    formData.append("type", addedItem.type);
+    if (image) {
+      formData.append("image", image);
+    }
+    else {
+      console.error("No image selected.");
+    }
+    const response = await axios.post(`${url}/api/item/add`, formData);
+    if (response.data.success) {
+      setAddedItem({
+        name:"",
+        price: "",
+        description: "",
+        type: "",
+      })
+      setImage(null);
+      toast.success(response.data.message);
+    }
+    else {
+
+    }
   }
+
   return (
     <div className="w-[70%] mx-auto my-12 text-gray-700 font-sans text-base bg-gray-100 p-5 rounded-lg shadow-md fade-in-cart">
       <form className="flex flex-col gap-5" onSubmit={onSubmit}>
@@ -48,7 +76,7 @@ const AddItems: React.FC = () => {
         </div>
         <div className="flex flex-col gap-2.5 w-full max-w-lg">
           <p className="text-base font-medium mb-1.5 text-[#333]">Item name</p>
-          <input className = "p-3 border border-gray-300 rounded-md bg-white text-base transition duration-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-300 focus:outline-none" onChange={onChange} value = {addedItem.name} type="text" name="name" placeholder="Type here" />
+          <input className = "p-3 border border-gray-300 rounded-md bg-white text-base transition duration-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-300 focus:outline-none" onChange={onChange} value = {addedItem.name} type="text" name="name" placeholder="Type here" required/>
         </div>
         <div className="flex flex-col gap-2.5 w-full max-w-lg">
         <p className="text-base font-medium mb-1.5 text-[#333]">Item Description</p>
@@ -69,7 +97,7 @@ const AddItems: React.FC = () => {
           <div className="add-category flex-col w-1/2">
             <p>Item Type</p>
             <select
-              className="w-full p-3 border border-gray-300 rounded-lg text-base focus:border-blue-500 focus:ring-2 focus:ring-blue-300 focus:outline-none transition-all"
+              className="w-full p-3 border border-gray-300 mt-[8px] rounded-lg text-base focus:border-blue-500 focus:ring-2 focus:ring-blue-300 focus:outline-none transition-all"
               onChange={onChange}
               value={addedItem.type}
               name="type"

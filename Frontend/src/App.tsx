@@ -1,4 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import Footer from './Components/Footer/Footer';
 import { Navbar } from './Components/Navbar/Navbar';
@@ -8,10 +10,12 @@ import HomeCategory from './Pages/HomeCategory/HomeCategory';
 import Login from './Pages/Login/Login';
 import Order from './Pages/Order/Order';
 import SignUp from './Pages/SignUp/SignUp';
+
 function App() {
   return (
     <>
       <div className="App">
+      <ToastContainer/>
         <BrowserRouter>
         <Navbar/>
         <Routes>
