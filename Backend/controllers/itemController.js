@@ -1,5 +1,5 @@
 import fs from "fs";
-import itemModel from '../models/model.js';
+import { itemModel } from '../models/model.js';
 const addItem = async (req, res) => {
     let image_filename = `${req.file.filename}`;
 
