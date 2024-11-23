@@ -35,7 +35,7 @@ const removeItem = async (req, res) => {
     try {
         const item_id = req.body.id;
         const item = await itemModel.findById(item_id);
-        fs.unlink(`uploads/${item.image}`, ()=>{});
+        fs.unlink(`assets/${item.image}`, ()=>{});
         await itemModel.findByIdAndDelete(item_id);
         res.json({success:true, message: "Item removed successfully"});
     }
