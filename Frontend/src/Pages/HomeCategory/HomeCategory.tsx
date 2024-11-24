@@ -1,13 +1,24 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { itemData } from '../../Data/Items';
+//import { itemData } from '../../Data/Items';
 import Cart from '../Cart/Cart';
 import Coffee from '../Coffee/Coffee';
 import Dessert from '../Dessert/Dessert';
 interface Props {
     category: string
 }
+interface Items {
+  id: string;
+  name: string;
+  image: string;
+  price: number;
+  description: string;
+  type: string;
+}
 
 const HomeCategory: React.FC<Props> = ({category}: Props) => {
+  const url = "http://localhost:5000";
+  const [itemData, setItemData] = useState<Items[]>([]);
   const [cartItems, setCartItems] = useState<Record<string, number>>(() => {
     const savedCart = localStorage.getItem("cartItems");
     return savedCart ? JSON.parse(savedCart) : {};
@@ -40,10 +51,19 @@ const HomeCategory: React.FC<Props> = ({category}: Props) => {
     }, 0);
   };
 
-  useEffect(() => {
-    console.log(cartItems);
-  }, [cartItems])
 
+
+  const getItemList = async() => {
+    const response = await axios.get(`${url}/api/item/list`);
+    setItemData(response.data.data);
+
+  }
+  useEffect(() => {
+    async function loadItemData() {
+      await getItemList();
+    }
+    loadItemData();
+  }, [])
   const coffeeData = itemData.filter(item => item.type === "Coffee");
   const dessertData = itemData.filter(item => item.type === "Dessert");
 
