@@ -1,17 +1,18 @@
+import axios from "axios";
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import bgImg from '../../Assets/signup-background-5.jpg';
 interface FormData {
   name: string;
   email: string;
-  username: string;
   password: string;
 }
 const SignUp: React.FC = () => {
+  const url = "http://localhost:5000";
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
-    username: '',
     password: ''
   })
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,7 +21,13 @@ const SignUp: React.FC = () => {
   }
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(e);
+    const response = await axios.post(`${url}/api/user/create`, formData);
+    if (response.data.success) {
+      toast.success(response.data.message);
+    }
+    else {
+      toast.error(response.data.message);
+    }
   }
   const backgroundStyle: React.CSSProperties = {
     backgroundImage: `url(${bgImg})`,
@@ -45,15 +52,7 @@ const SignUp: React.FC = () => {
               onChange={handleChange}
               required
             />
-            <input
-              type="text"
-              placeholder='Username'
-              name='username'
-              value={formData.username}
-              className='h-[70px] p-[10px] text-[22px] text-white font-bold border-[2.5px] border-[#fffefe] rounded-[35px] w-[calc(100%-22px)] bg-transparent max-sm:w-full md:w-auto'
-              onChange={handleChange}
-              required
-            />
+
             <input
               type="email"
               placeholder='Email Address'

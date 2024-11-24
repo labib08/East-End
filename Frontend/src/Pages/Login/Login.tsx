@@ -1,13 +1,18 @@
+import axios from "axios";
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import bgImg from '../../Assets/signup-background-5.jpg';
+
 interface FormData {
-    username: string;
+    email: string;
     password: string;
   }
 const Login: React.FC = () => {
+    const url = "http://localhost:5000";
+    //const [token, setToken] = useState<string>("")
+    const navigate = useNavigate();
     const [formData, setFormData] = useState<FormData>({
-        username: '',
+        email: '',
         password: '',
         })
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,13 +21,21 @@ const Login: React.FC = () => {
         };
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(e);
+        const response = await axios.post(`${url}/api/user/login`, formData);
+        if (response.data.success) {
+            localStorage.clear();
+            localStorage.setItem("token", response.data.token);
+            navigate('/');
         }
+        else {
+            alert(response.data.message);
+        }
+    }
     const backgroundStyle: React.CSSProperties = {
         backgroundImage: `url(${bgImg})`,
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
-        }
+    }
   return (
     <div
       className="w-full h-screen bg-cover bg-center flex justify-center items-center mb-[-40px]"
@@ -34,9 +47,9 @@ const Login: React.FC = () => {
         <div className="flex flex-col gap-5 mb-5 bg-none">
                 <input
                 type="text"
-                placeholder="Username"
-                name="username"
-                value={formData.username}
+                placeholder="Email"
+                name="email"
+                value={formData.email}
                 className='h-[70px] p-[10px] text-[22px] text-white font-bold border-[2.5px] border-[#fffefe] rounded-[35px] w-[calc(100%-22px)] bg-transparent max-sm:w-full md:w-auto'
                 onChange={handleChange}
                 required

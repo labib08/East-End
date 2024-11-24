@@ -1,10 +1,15 @@
 import { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import logout_icon from "../../Assets/7124045_logout_icon.png";
+import bag from "../../Assets/bag_icon1.svg";
 import cart from '../../Assets/cart-icon.svg';
 import logo from '../../Assets/logo.png';
 import toggle from '../../Assets/navbar-toggle.png';
+import profile from '../../Assets/profile_icon.png';
 import './Navbar.css';
 export const Navbar: React.FC = () => {
+  const token = localStorage.getItem('token');
+  const navigate = useNavigate();
   const [page, setPage] = useState<string>('home');
   const onClickPage = (currPage: string): void => {
     return setPage(currPage);
@@ -24,7 +29,12 @@ export const Navbar: React.FC = () => {
         menuElement.classList.toggle('nav-menu-visible');
     }
     e.currentTarget.classList.toggle('open');
-};
+    };
+    const logout =() => {
+      localStorage.clear();
+      navigate("/");
+      navigate(0);
+    }
   return (
 
     <div className="navbar flex justify-around shadow-md py-[10px]">
@@ -69,11 +79,28 @@ export const Navbar: React.FC = () => {
         </li>
       </ul>
       <div className="nav-login-cart flex items-center gap-40">
-        <Link to='/login'>
-          <button className="nav-login-cart-button w-36 h-12 outline-none border border-[#a3a3a3] rounded-full text-black text-lg font-medium bg-white cursor-pointer hover:shadow-[2px_2px_5px_0px_rgba(0,0,0,0.5)] active:bg-[rgb(164,162,162)]">
-            Login
-          </button>
-        </Link>
+      {token ? (
+          <div className="relative group">
+          <img src={profile} alt="" />
+          <ul className="absolute hidden right-0 z-[1] group-hover:flex flex-col gap-[10px] bg-[whitesmoke] p-[12px_25px] -ml-[120px] rounded-[4px] border border-[rgb(92,22,22)] outline outline-2 outline-white list-none">
+            <li className="flex items-center gap-[10px] cursor-pointer hover:text-[rgb(92,22,22)]">
+              <img className="w-[20px] h-[18px]" src={bag} alt="" />
+              <p>Orders</p>
+            </li>
+            <hr />
+            <li className="flex items-center gap-[10px] cursor-pointer hover:text-[rgb(92,22,22)]" onClick={logout}>
+              <img className="w-[20px] h-[18px]" src={logout_icon} alt="" />
+              <p>Logout</p>
+            </li>
+          </ul>
+        </div>
+        ) : (
+          <Link to="/login">
+            <button className="nav-login-cart-button w-36 h-12 outline-none border border-[#a3a3a3] rounded-full text-black text-lg font-medium bg-white cursor-pointer hover:shadow-[2px_2px_5px_0px_rgba(0,0,0,0.5)] active:bg-[rgb(164,162,162)]">
+              Login
+            </button>
+          </Link>
+        )}
 
         <Link to='/cart'>
           <img onClick = {() => onClickPage('cart')} src={cart} alt="" className="nav-login-cart-img w-10 h-auto cursor-pointer" />

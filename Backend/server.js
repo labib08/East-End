@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cors())
 
 app.use("/api/item", itemRouter);
-app.use("api/user", userRouter);
+app.use("/api/user", userRouter);
 app.use("/images", express.static('assets'))
 
 app.get("/", (req, res) =>{
