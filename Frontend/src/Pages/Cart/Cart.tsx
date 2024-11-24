@@ -24,6 +24,7 @@ interface Props {
 }
 const Cart: React.FC<Props> = ({itemData, addToCart, removeFromCart, cartItems, setCartItems, getTotal}: Props) => {
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
+  const url = "http://localhost:5000";
   useEffect(() => {
     const hasItems = Object.values(cartItems).some((count) => count > 0);
     setIsEmpty(!hasItems);
@@ -45,7 +46,7 @@ const Cart: React.FC<Props> = ({itemData, addToCart, removeFromCart, cartItems, 
         .map((item, index) => (
           <div key={index}>
             <div className="cart-items-item">
-              <img className="item-image" src={item.image} alt="" />
+              <img className="item-image" src={`${url}/images/${item.image}`} alt="" />
               <p>{item.name}</p>
               <p>${item.price.toFixed(1)}</p>
               <p>{cartItems[item.id]}</p>
