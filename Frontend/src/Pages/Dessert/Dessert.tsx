@@ -1,6 +1,6 @@
 import MenuItem from "../../Components/MenuItem/MenuItem";
 interface DessertType {
-    id: string;
+    _id: string;
     name: string;
     image: string;
     price: number;
@@ -24,7 +24,7 @@ const Dessert: React.FC<Props> = ({dessertData, addToCart, removeFromCart, cartI
         </div>
         <div className="menuItemCoffee grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] mt-[30px] mx-[30px] gap-[30px] row-gap-[50px]">
             {dessertData.map((dessert, index) => {
-                return <MenuItem key={index} id={dessert.id} name = {dessert.name} image={dessert.image} price = {dessert.price} description= {dessert.description} addToCart = {addToCart} removeFromCart = {removeFromCart} cartItems = {cartItems} setCartItems = {setCartItems}/>
+                return <MenuItem key={index} id={dessert._id} name = {dessert.name} image={dessert.image} price = {dessert.price} description= {dessert.description} addToCart = {addToCart} removeFromCart = {removeFromCart} cartItems = {cartItems} setCartItems = {setCartItems}/>
 
             })}
         </div>

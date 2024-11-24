@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import cross from "../../Assets/cross-icon.svg";
 import './Cart.css';
 interface Items {
-  id: string;
+  _id: string;
   name: string;
   image: string;
   price: number;
@@ -42,18 +42,18 @@ const Cart: React.FC<Props> = ({itemData, addToCart, removeFromCart, cartItems, 
         </div>
         <br />
         {itemData
-        .filter((item) => cartItems[item.id] > 0)
+        .filter((item) => cartItems[item._id] > 0)
         .map((item, index) => (
           <div key={index}>
             <div className="cart-items-item">
               <img className="item-image" src={`${url}/images/${item.image}`} alt="" />
               <p>{item.name}</p>
               <p>${item.price.toFixed(1)}</p>
-              <p>{cartItems[item.id]}</p>
-              <p>${(item.price * cartItems[item.id]).toFixed(1)}</p>
+              <p>{cartItems[item._id]}</p>
+              <p>${(item.price * cartItems[item._id]).toFixed(1)}</p>
               <img
                 onClick={() => {
-                  removeFromCart(item.id);
+                  removeFromCart(item._id);
                 }}
                 src={cross}
                 className="cross"

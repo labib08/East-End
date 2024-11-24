@@ -8,7 +8,7 @@ interface Props {
     category: string
 }
 interface Items {
-  id: string;
+  _id: string;
   name: string;
   image: string;
   price: number;
@@ -46,7 +46,7 @@ const HomeCategory: React.FC<Props> = ({category}: Props) => {
 
   const getTotal = (): number => {
     return Object.entries(cartItems).reduce((total, [itemId, quantity]) => {
-      const item = itemData.find((item) => item.id === itemId);
+      const item = itemData.find((item) => item._id === itemId);
       return item ? total + item.price * quantity : total;
     }, 0);
   };

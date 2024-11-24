@@ -1,7 +1,7 @@
 import MenuItem from "../../Components/MenuItem/MenuItem";
 import './Coffee.css';
 interface CoffeeType {
-    id: string;
+    _id: string;
     name: string;
     image: string;
     price: number;
@@ -25,7 +25,7 @@ const Coffee: React.FC<Props> = ({coffeeData, addToCart, removeFromCart, cartIte
         </div>
         <div className="menuItemCoffee grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] mt-[30px] mx-[30px] gap-[30px] row-gap-[50px]">
             {coffeeData.map((coffee, index) => {
-                return <MenuItem key={index} id={coffee.id} name = {coffee.name} image={coffee.image} price = {coffee.price} description= {coffee.description} addToCart = {addToCart} removeFromCart = {removeFromCart} cartItems = {cartItems} setCartItems = {setCartItems}/>
+                return <MenuItem key={index} id={coffee._id} name = {coffee.name} image={coffee.image} price = {coffee.price} description= {coffee.description} addToCart = {addToCart} removeFromCart = {removeFromCart} cartItems = {cartItems} setCartItems = {setCartItems}/>
 
             })}
         </div>
