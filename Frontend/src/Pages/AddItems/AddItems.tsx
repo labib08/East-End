@@ -48,13 +48,14 @@ const AddItems: React.FC = () => {
     else {
       console.error("No image selected.");
     }
+    console.log(formData)
     const response = await axios.post(`${url}/api/item/add`, formData);
     if (response.data.success) {
       setAddedItem({
         name:"",
         price: "",
         description: "",
-        type: "",
+        type: "Coffee",
       })
       setImage(null);
       toast.success(response.data.message);
