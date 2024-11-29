@@ -30,7 +30,7 @@ const MenuItem = ({id, name, image, price, description, addToCart, removeFromCar
             <p className="text-[#676767] text-[12px] mb-auto">{description}</p>
             <div className="flex justify-between items-center mt-auto">
                 <p className="text-[rgb(92,22,22)] text-[22px] font-medium">${price.toFixed(1)}</p>
-                {cartItems[id] > 0 ? (
+                {(cartItems[id] || 0) > 0 ? (
                     <div className="flex items-center gap-2.5">
                         <img className = "cursor-pointer w-[30px] transform hover:scale-125 transition-transform duration-300" onClick={() => removeFromCart(id)} src={removeButton} alt="" />
                         <p>{cartItems[id]}</p>

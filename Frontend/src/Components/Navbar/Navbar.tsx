@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logout_icon from "../../Assets/7124045_logout_icon.png";
@@ -9,6 +10,7 @@ import profile from '../../Assets/profile_icon.png';
 import './Navbar.css';
 export const Navbar: React.FC = () => {
   const token = localStorage.getItem('token');
+  const url = "http://localhost:5000";
   const navigate = useNavigate();
   const [page, setPage] = useState<string>('home');
   const onClickPage = (currPage: string): void => {
@@ -30,7 +32,14 @@ export const Navbar: React.FC = () => {
     }
     e.currentTarget.classList.toggle('open');
     };
-    const logout =() => {
+    const logout =async() => {
+      if (token) {
+          try {
+              await axios.post(`${url}/api/cart/delete`, {}, { headers: { token } });
+          } catch (error) {
+              console.error("Error clearing cart:", error);
+          }
+      }
       localStorage.clear();
       navigate("/");
       navigate(0);

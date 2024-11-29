@@ -17,6 +17,7 @@ interface Items {
 }
 
 const HomeCategory: React.FC<Props> = ({category}: Props) => {
+  const token = localStorage.getItem('token');
   const url = "http://localhost:5000";
   const [itemData, setItemData] = useState<Items[]>([]);
   const [cartItems, setCartItems] = useState<Record<string, number>>(() => {
@@ -26,14 +27,19 @@ const HomeCategory: React.FC<Props> = ({category}: Props) => {
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
-  const addToCart = (itemID: string): void => {
+
+  const addToCart = async(itemID: string) => {
     setCartItems((prev) => ({
       ...prev,
       [itemID]: (prev[itemID] || 0) + 1,
     }));
+
+    if (token) {
+      await axios.post(`${url}/api/cart/add`, {itemID}, {headers:{token}});
+    }
   };
 
-  const removeFromCart = (itemID: string): void => {
+  const removeFromCart = async(itemID: string) => {
     setCartItems((prev) => {
       if (prev[itemID] > 1) {
         return { ...prev, [itemID]: prev[itemID] - 1 };
@@ -42,6 +48,9 @@ const HomeCategory: React.FC<Props> = ({category}: Props) => {
         return remainingItems;
       }
     });
+    if (token) {
+      await axios.post(`${url}/api/cart/remove`, {itemID}, {headers:{token}});
+    }
   };
 
   const getTotal = (): number => {
@@ -51,11 +60,9 @@ const HomeCategory: React.FC<Props> = ({category}: Props) => {
     }, 0);
   };
 
-
-
   const getItemList = async() => {
     const response = await axios.get(`${url}/api/item/list`);
-    setItemData(response.data.data);
+    setItemData(response.data.data|| {});
 
   }
   useEffect(() => {
@@ -63,7 +70,7 @@ const HomeCategory: React.FC<Props> = ({category}: Props) => {
       await getItemList();
     }
     loadItemData();
-  }, [])
+  }, [token])
   const coffeeData = itemData.filter(item => item.type === "Coffee");
   const dessertData = itemData.filter(item => item.type === "Dessert");
 
