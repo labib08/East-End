@@ -17,7 +17,6 @@ export const Navbar: React.FC = () => {
     return setPage(currPage);
   }
   const setHrTag = (currPage: string): JSX.Element | null => {
-    console.log(page, currPage)
     if (page === currPage) {
         return <hr className="border-0 w-[80%] mt-[8px] ml-[7px] h-[3px] rounded-xl bg-custom-red" />;
     }

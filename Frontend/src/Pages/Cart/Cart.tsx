@@ -1,5 +1,7 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 import cross from "../../Assets/cross-icon.svg";
 import './Cart.css';
 interface Items {
@@ -10,7 +12,7 @@ interface Items {
   description: string;
   type: string;
 }
-
+type OrderItem = Items & { quantity: number };
 interface CartItems {
   [key: string]: number;
 };
@@ -25,10 +27,36 @@ interface Props {
 const Cart: React.FC<Props> = ({itemData, addToCart, removeFromCart, cartItems, setCartItems, getTotal}: Props) => {
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
   const url = "http://localhost:5000";
+  const token = localStorage.getItem('token');
+  const navigate = useNavigate();
   useEffect(() => {
     const hasItems = Object.values(cartItems).some((count) => count > 0);
     setIsEmpty(!hasItems);
   }, [cartItems]);
+
+  const onClickSubmit = async() => {
+    await axios.post(`${url}/api/order/delete`, {}, {headers: {token}})
+    let orderItems: OrderItem[] = itemData
+    .filter((item) => cartItems[item._id] > 0)
+    .map((item) => ({
+      ...item,
+      quantity: cartItems[item._id],
+    }));
+    let orderData = {
+      address: {},
+      items: orderItems,
+      amount: getTotal() + 2,
+    }
+
+    console.log("Order Data:", orderData);
+    const response = await axios.post(`${url}/api/order/details`, orderData, {headers:{token}})
+    if (response.data.success) {
+      navigate('/order');
+    }
+    else {
+      toast.error(response.data.message);
+    }
+  }
   return (
     <div className='cart'>
       <div className='cart-items'>
@@ -86,7 +114,7 @@ const Cart: React.FC<Props> = ({itemData, addToCart, removeFromCart, cartItems, 
             </div>
             {isEmpty ?
               <button onClick={() => alert('Your cart is empty')}>CHECKOUT</button>
-            : <Link to = "/order"><button>CHECKOUT</button></Link>
+            : <button onClick={onClickSubmit}>CHECKOUT</button>
             }
 
           </div>
