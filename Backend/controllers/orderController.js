@@ -39,13 +39,12 @@ const getOrderDetails = async(req, res) => {
 const placeOrder = async(req, res) => {
     const url = "http://localhost:3000"
     try {
-        const newOrder = await orderModel.findOne({userId: req.body.userId});
-        await newOrder.save();
+        const newOrder = await orderModel.findOneAndUpdate({userId: req.body.userId}, {address: req.body.formData});
         let userData = await userModel.findById(req.body.userId);
         let cartData = userData.cartData;
         cartData = {};
         await userModel.findByIdAndUpdate(req.body.userId, {cartData});
-        const line_items = req.body.items.map((item) =>({
+        const line_items = newOrder.items.map((item) =>({
             price_data: {
                 currency: "aud",
                 product_data: {
@@ -74,8 +73,8 @@ const placeOrder = async(req, res) => {
         res.json({success:true, session_url:session.url})
     }
     catch (err) {
-        //console.log(err);
-        res.json({success:false, message: "Error"})
+        console.log(err);
+        res.json({success:false, message: "Error Checking Out"})
     }
 }
 
