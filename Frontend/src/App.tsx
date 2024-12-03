@@ -10,6 +10,7 @@ import HomeCategory from './Pages/HomeCategory/HomeCategory';
 import Login from './Pages/Login/Login';
 import Order from './Pages/Order/Order';
 import SignUp from './Pages/SignUp/SignUp';
+import Verify from './Pages/Verify/Verify';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path = "/login" element = {<Login/>}/>
           <Route path = "/signup" element = {<SignUp/>}/>
           <Route path = "/admin" element = {<Admin/>}/>
+          <Route path = "/verify" element = {<Verify/>}/>
         </Routes>
         </BrowserRouter>
       </div>

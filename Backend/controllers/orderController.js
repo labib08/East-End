@@ -31,7 +31,7 @@ const getOrderDetails = async(req, res) => {
         res.json({success: true, message: "Successfully Saved Order"})
     }
     catch(err) {
-        //console.log(err);
+        console.log(err);
         res.json({success:false, message: "Error Checking Out. Please Try again"})
     }
 }
@@ -78,5 +78,22 @@ const placeOrder = async(req, res) => {
     }
 }
 
-export { deleteOrderDetails, getOrderDetails, placeOrder };
+const verifyOrder = async(req, res) => {
+    const {orderId, success} = req.body;
+    try {
+        if (success==="true") {
+            await orderModel.findByIdAndUpdate(orderId, {payment:true});
+            res.json({success:true, message: "Payment Successful"});
+        }
+        else {
+            await orderModel.findByIdAndDelete(orderId);
+            res.json({success:false, message: "Payment Failed"});
+        }
+    } catch (err) {
+        console.log(err);
+        res.json({success:false, message: "Error"});
+    }
+}
+
+export { deleteOrderDetails, getOrderDetails, placeOrder, verifyOrder };
 

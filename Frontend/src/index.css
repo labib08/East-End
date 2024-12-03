@@ -21,6 +21,14 @@ code {
 .fade-in-home {
   animation: fadeInHome 2s;
 }
+.rotate-verify {
+  animation: rotate 1s infinite;
+}
+@keyframes rotate {
+  100% {
+      transform:rotate(360deg);
+  }
+}
 
 @keyframes fadeInHome {
   0% {
