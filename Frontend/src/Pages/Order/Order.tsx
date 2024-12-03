@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import './Order.css';
 
@@ -46,6 +47,13 @@ const Order = () => {
       toast.error(response.data.message);
     }
   };
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!token) {
+      navigate('/cart');
+    }
+
+  }, [token, navigate])
 
   return (
     <form onSubmit={handleSubmit} className="place-order">
