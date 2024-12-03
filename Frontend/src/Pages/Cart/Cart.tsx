@@ -43,13 +43,13 @@ const Cart: React.FC<Props> = ({itemData, addToCart, removeFromCart, cartItems, 
       quantity: cartItems[item._id],
     }));
     let orderData = {
-      address: {},
       items: orderItems,
       amount: getTotal() + 2,
     }
 
     console.log("Order Data:", orderData);
     const response = await axios.post(`${url}/api/order/details`, orderData, {headers:{token}})
+    console.log(response);
     if (response.data.success) {
       navigate('/order');
     }

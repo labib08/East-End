@@ -37,7 +37,7 @@ const Order = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    let response = await axios.post(`${url}/api/order/place`, formData, {headers:{token}})
+    let response = await axios.post(`${url}/api/order/place`, {formData}, {headers:{token}})
     if (response.data.success) {
       const {session_url} = response.data;
       window.location.replace(session_url);

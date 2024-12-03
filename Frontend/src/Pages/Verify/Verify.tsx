@@ -4,19 +4,20 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const Verify: React.FC = () => {
     const url = "http://localhost:5000";
+    const token = localStorage.getItem('token');
     const [search] = useSearchParams();
     const success = search.get("success");
-    const orderId = search.get("orderId");
     const navigate = useNavigate();
 
     const verifyPayment = React.useCallback(async () => {
-        const response = await axios.post(`${url}/api/order/verify`, { success, orderId });
+        const response = await axios.post(`${url}/api/order/verify`, {success}, {headers:{token}});
         if (response.data.success) {
             navigate("/myorders");
+            localStorage.removeItem("cartItems");
         } else {
             navigate("/");
         }
-    }, [url, success, orderId, navigate]);
+    }, [url, success, token, navigate]);
 
     useEffect(() => {
         verifyPayment();

@@ -6,7 +6,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const deleteOrderDetails = async(req, res) => {
     try {
-        const deleteOrder = await orderModel.findOneAndDelete({userId: req.body.userId});
+        const deleteOrder = await orderModel.findOneAndDelete({userId: req.body.userId, payment: false});
         if (!deleteOrder) {
             return res.json({success: false, message: "Error Finding User"});
         }
@@ -19,13 +19,12 @@ const deleteOrderDetails = async(req, res) => {
 }
 
 const getOrderDetails = async(req, res) => {
-
     try {
         const newOrder = new orderModel({
             userId: req.body.userId,
             items: req.body.items,
             amount: req.body.amount,
-            address:req.body.address,
+            address:{},
         })
         await newOrder.save();
         res.json({success: true, message: "Successfully Saved Order"})
@@ -38,8 +37,9 @@ const getOrderDetails = async(req, res) => {
 
 const placeOrder = async(req, res) => {
     const url = "http://localhost:3000"
+    const {formData} = req.body;
     try {
-        const newOrder = await orderModel.findOneAndUpdate({userId: req.body.userId}, {address: req.body.formData});
+        const newOrder = await orderModel.findOneAndUpdate({userId: req.body.userId}, {address: formData});
         let userData = await userModel.findById(req.body.userId);
         let cartData = userData.cartData;
         cartData = {};
@@ -79,14 +79,14 @@ const placeOrder = async(req, res) => {
 }
 
 const verifyOrder = async(req, res) => {
-    const {orderId, success} = req.body;
+    const {success} = req.body;
     try {
         if (success==="true") {
-            await orderModel.findByIdAndUpdate(orderId, {payment:true});
+            await orderModel.findOneAndUpdate({userId: req.body.userId, payment: false}, {payment:true});
             res.json({success:true, message: "Payment Successful"});
         }
         else {
-            await orderModel.findByIdAndDelete(orderId);
+            await orderModel.findByIdAndDelete(req.body.userId);
             res.json({success:false, message: "Payment Failed"});
         }
     } catch (err) {
@@ -95,5 +95,16 @@ const verifyOrder = async(req, res) => {
     }
 }
 
-export { deleteOrderDetails, getOrderDetails, placeOrder, verifyOrder };
+const userOrders = async (req, res) => {
+    try {
+        const orders = await orderModel.find({userId:req.body.userId});
+        res.json({success:true, data:orders})
+    } catch (err) {
+        console.log(err);
+        res.json({success:false, message:"Error"})
+    }
+
+}
+
+export { deleteOrderDetails, getOrderDetails, placeOrder, userOrders, verifyOrder };
 

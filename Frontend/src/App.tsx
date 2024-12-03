@@ -8,6 +8,7 @@ import Admin from './Pages/Admin/Admin';
 import Home from './Pages/Home/Home';
 import HomeCategory from './Pages/HomeCategory/HomeCategory';
 import Login from './Pages/Login/Login';
+import MyOrders from './Pages/MyOrders/MyOrders';
 import Order from './Pages/Order/Order';
 import SignUp from './Pages/SignUp/SignUp';
 import Verify from './Pages/Verify/Verify';
@@ -30,6 +31,7 @@ function App() {
           <Route path = "/signup" element = {<SignUp/>}/>
           <Route path = "/admin" element = {<Admin/>}/>
           <Route path = "/verify" element = {<Verify/>}/>
+          <Route path = "/myorders" element = {<MyOrders/>}/>
         </Routes>
         </BrowserRouter>
       </div>
