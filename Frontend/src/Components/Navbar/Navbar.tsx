@@ -91,7 +91,7 @@ export const Navbar: React.FC = () => {
           <div className="relative group">
           <img src={profile} alt="" />
           <ul className="absolute hidden right-0 z-[1] group-hover:flex flex-col gap-[10px] bg-[whitesmoke] p-[12px_25px] -ml-[120px] rounded-[4px] border border-[rgb(92,22,22)] outline outline-2 outline-white list-none">
-            <li className="flex items-center gap-[10px] cursor-pointer hover:text-[rgb(92,22,22)]">
+            <li onClick={() => navigate('/myorders')} className="flex items-center gap-[10px] cursor-pointer hover:text-[rgb(92,22,22)]">
               <img className="w-[20px] h-[18px]" src={bag} alt="" />
               <p>Orders</p>
             </li>

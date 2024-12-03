@@ -57,7 +57,7 @@ const MyOrders: React.FC = () => {
     }, [fetchOrders, token]);
 
     return (
-        <div className='mt-[50px] mx-[70px]'>
+        <div className='mt-[50px] mx-[70px] fade-in-cart'>
             <h2 className='font-bold text-[27px]'>My Orders</h2>
             <div className='flex flex-col gap-5 mt-8'>
                 {data.map((order, index) => (
