@@ -72,7 +72,7 @@ const MyOrders: React.FC = () => {
                         <p>${order.amount.toFixed(1)}</p>
                         <p>Items: {order.items.length}</p>
                         <p><span className='font-[500] text-[#454545]'>&#x25cf;</span> <b>{order.status}</b></p>
-                        <button className='border-none text-[14px] py-[12px] px-0 rounded-[50px] bg-[rgb(92,22,22)] text-white cursor-pointer transition ease-in-out duration-300 hover:bg-[rgb(120,30,30)] md:text-[10px]'> Track Order</button>
+                        <button onClick ={fetchOrders} className='border-none text-[14px] py-[12px] px-0 rounded-[50px] bg-[rgb(92,22,22)] text-white cursor-pointer transition ease-in-out duration-300 hover:bg-[rgb(120,30,30)] md:text-[10px]'> Track Order</button>
                     </div>
                 ))}
             </div>
