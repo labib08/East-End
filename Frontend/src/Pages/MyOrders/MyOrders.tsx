@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import orderPhoto from "../../Assets/order.jpeg";
 interface Information {
     firstName: string,
@@ -46,13 +46,13 @@ const MyOrders: React.FC = () => {
         } catch (error) {
             console.error('Error fetching orders:', error);
         }
-    }, [url, token, data]);
+    }, [url, token]);
 
-    // useEffect(() => {
-    //     if (token) {
-    //         fetchOrders();
-    //     }
-    // }, [fetchOrders, token]);
+    useEffect(() => {
+        if (token) {
+            fetchOrders();
+        }
+    }, [fetchOrders, token]);
 
     return (
         <div className='mt-[50px] mx-[70px] fade-in-cart'>
