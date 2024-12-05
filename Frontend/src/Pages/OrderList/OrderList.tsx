@@ -39,14 +39,24 @@ interface Order {
 const OrderList: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const url = "http://localhost:5000";
+
   const fetchAllOrders = async () => {
     const response = await axios.get(`${url}/api/order/listorders`)
     if (response.data.success) {
       setOrders(response.data.data);
-
     }
     else {
       toast.error(response.data.message);
+    }
+  }
+
+  const statusHandler = async (e: React.ChangeEvent<HTMLSelectElement>, orderId: string) => {
+    const response = await axios.post(`${url}/api/order/status`,{
+      orderId,
+      status: e.target.value,
+    });
+    if (response.data.success) {
+      await fetchAllOrders();
     }
   }
 
@@ -84,7 +94,7 @@ const OrderList: React.FC = () => {
             </div>
             <p> Items: {order.items.length} </p>
             <p>${order.amount.toFixed(1)}</p>
-            <select className='bg-[#ffe8e4] border border-[rgb(92,22,22)] w-[max(16.2vw,120px)] p-[10px] text-[14px] outline-none md-lg:p-[5px] md-lg:text-[12px]'>
+            <select onChange={(e) => statusHandler(e, order._id)} value = {order.status} className='bg-[#ffe8e4] border border-[rgb(92,22,22)] w-[max(16.2vw,120px)] p-[10px] text-[14px] outline-none md-lg:p-[5px] md-lg:text-[12px]'>
               <option value="Restaurant is making the item">Restaurant is making the item</option>
               <option value="Rider has picked up the order">Rider has picked up the order</option>
               <option value="Delivered">Delivered</option>

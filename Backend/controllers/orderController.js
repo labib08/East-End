@@ -114,8 +114,17 @@ const listOrders = async (req, res) => {
         console.log(err);
         res.json({success:false, message: "Error"})
     }
-
 }
 
-export { deleteOrderDetails, getOrderDetails, listOrders, placeOrder, userOrders, verifyOrder };
+const updateStatus = async (req, res) => {
+    try {
+        await orderModel.findByIdAndUpdate(req.body.orderId, {status: req.body.status});
+        res.json({success:true, message: "Status Updated"});
+    } catch (err) {
+        console.log(err);
+        res.json({success:false, message:"Error"})
+    }
+}
+
+export { deleteOrderDetails, getOrderDetails, listOrders, placeOrder, updateStatus, userOrders, verifyOrder };
 
