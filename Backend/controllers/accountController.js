@@ -55,5 +55,21 @@ const createAccount = async(req, res) => {
         res.json({success:false, message: "Error creating account"})
     }
 }
-export { createAccount, loginUser };
+
+const isAdmin = async(req, res) => {
+    console.log("sup")
+    try {
+        const userData = await userModel.findById(req.body.userId);
+        const isAdmin = userData.isAdmin;
+        if (!isAdmin) {
+            return res.json({success: false, message: "User is not an admin"})
+        }
+        res.json({success: true, message: "User is an admin"})
+    } catch (err) {
+        console.log(err);
+        res.json({success:false, message: "Error"})
+    }
+}
+
+export { createAccount, isAdmin, loginUser };
 

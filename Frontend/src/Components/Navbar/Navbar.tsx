@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logout_icon from "../../Assets/7124045_logout_icon.png";
 import bag from "../../Assets/bag_icon1.svg";
@@ -13,6 +13,32 @@ export const Navbar: React.FC = () => {
   const url = "http://localhost:5000";
   const navigate = useNavigate();
   const [page, setPage] = useState<string>('home');
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+
+  useEffect(() => {
+    const getAdmin = async () => {
+      try {
+
+        const response = await axios.post(`${url}/api/user/isadmin`, {}, {
+          headers: {
+            token: token,
+          },
+        });
+        setIsAdmin(response.data.success);
+      } catch (err) {
+        console.error("Error fetching admin status:", err);
+        setIsAdmin(false);
+      }
+    };
+
+    if (token) {
+
+      getAdmin();
+    } else {
+      setIsAdmin(false);
+    }
+  }, [token]);
+
   const onClickPage = (currPage: string): void => {
     return setPage(currPage);
   }
@@ -40,6 +66,7 @@ export const Navbar: React.FC = () => {
           }
       }
       localStorage.clear();
+      setIsAdmin(false);
       navigate("/");
       navigate(0);
     }
@@ -79,12 +106,13 @@ export const Navbar: React.FC = () => {
           </Link>
           {setHrTag("merch")}
         </li>
-        <li onClick={() => onClickPage('admin')}>
+        {isAdmin ?
+          <li onClick={() => onClickPage('admin')}>
           <Link to="/admin" className="nav-menu-li no-underline text-black flex flex-col items-center justify-center gap-3 cursor-pointer navbar-link-tag hover:text-[rgb(83,14,14)] focus:text-[rgb(63,13,13)] transition-colors duration-400 ease-in-out">
             Admin
           </Link>
           {setHrTag("admin")}
-        </li>
+        </li>: null}
       </ul>
       <div className="nav-login-cart flex items-center gap-40">
       {token ? (
