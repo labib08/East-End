@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logout_icon from "../../Assets/7124045_logout_icon.png";
 import bag from "../../Assets/bag_icon1.svg";
 import cart from '../../Assets/cart-icon.svg';
@@ -10,10 +10,23 @@ import profile from '../../Assets/profile_icon.png';
 import './Navbar.css';
 export const Navbar: React.FC = () => {
   const token = localStorage.getItem('token');
+  const location = useLocation();
   const url = "http://localhost:5000";
   const navigate = useNavigate();
   const [page, setPage] = useState<string>('home');
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
+
+  useEffect(() => {
+    const path = location.pathname.replace('/', '');
+    setPage(path || 'home');
+    localStorage.setItem('activePage', path || 'home');
+
+    const storedPage = localStorage.getItem('activePage');
+    if (storedPage) {
+      setPage(storedPage);
+    }
+
+  }, [location]);
 
   useEffect(() => {
     const getAdmin = async () => {
@@ -26,7 +39,7 @@ export const Navbar: React.FC = () => {
         });
         setIsAdmin(response.data.success);
       } catch (err) {
-        console.error("Error fetching admin status:", err);
+        console.error(err);
         setIsAdmin(false);
       }
     };
@@ -40,7 +53,8 @@ export const Navbar: React.FC = () => {
   }, [token]);
 
   const onClickPage = (currPage: string): void => {
-    return setPage(currPage);
+    setPage(currPage);
+    localStorage.setItem('activePage', currPage);
   }
   const setHrTag = (currPage: string): JSX.Element | null => {
     if (page === currPage) {
