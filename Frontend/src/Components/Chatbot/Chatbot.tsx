@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 
 interface Message {
@@ -6,6 +7,7 @@ interface Message {
 }
 
 const Chatbot: React.FC = () => {
+  const url = "http://localhost:5000";
   const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
@@ -17,7 +19,7 @@ const Chatbot: React.FC = () => {
     setIsChatOpen((prev) => !prev);
   };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async() => {
     if (inputValue.trim() === '') return;
 
     const userMessage: Message = { text: inputValue.trim(), sender: 'user' };
@@ -25,11 +27,15 @@ const Chatbot: React.FC = () => {
     setInputValue('');
     setLoading(true);
 
+    const response = await axios.post(`${url}/api/chatbot/chatbot`, {message: inputValue})
+
+    const botReply = response.data.reply;
+
     setTimeout(() => {
-      const botMessage: Message = { text: 'This is a bot response.', sender: 'bot' };
+      const botMessage: Message = { text: botReply, sender: 'bot' };
       setMessages((prevMessages) => [...prevMessages, botMessage]);
       setLoading(false);
-    }, 1500);
+    }, 500);
   };
 
   useEffect(() => {

@@ -1,0 +1,7 @@
+{
+    "how to signup and login": "To SignUp, go to the Login button on the top right and on the bottom there will be a link for SignUp. SignUp and then go back to the Login page to login",
+    "why cannot i order": "You need to be logged in to order",
+    "how to make payment": "Go to https://docs.stripe.com/testing website and select 'Cards by country' on the tab on the right. Search Australia and copy the 16-digit card number. Go back to the Payment section and paste the card number. Then fill the expiry date with any valid future date and fill the CVV/CVC section with any random 3 digit number. Fill the other sections and press the Pay button",
+    "how to login": "Press the login button on top right",
+    "how to logout": "Press the icon on top right that looks like a person, and there will be an option to logout"
+  }

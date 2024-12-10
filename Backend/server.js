@@ -4,6 +4,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import userRouter from './routes/accountRoute.js';
 import cartRouter from './routes/cartRoute.js';
+import chatbotRouter from './routes/chatbotRoute.js';
 import itemRouter from './routes/itemRoute.js';
 import orderRouter from './routes/orderRoute.js';
 
@@ -19,6 +20,7 @@ app.use("/api/item", itemRouter);
 app.use("/api/user", userRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/order", orderRouter);
+app.use("/api/chatbot", chatbotRouter)
 app.use("/images", express.static('assets'))
 
 app.get("/", (req, res) =>{
