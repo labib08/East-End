@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface Message {
   text: string;
@@ -10,6 +10,8 @@ const Chatbot: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const toggleChatWindow = () => {
     setIsChatOpen((prev) => !prev);
@@ -30,6 +32,10 @@ const Chatbot: React.FC = () => {
     }, 1500);
   };
 
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
   return (
     <div className="fixed bottom-[20px] right-[20px] font-sans z-[1000]">
       <button
@@ -47,19 +53,20 @@ const Chatbot: React.FC = () => {
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto flex flex-col justify-end p-[10px] gap-[5px]">
+          <div className="flex-1 overflow-y-auto flex flex-col p-[10px] gap-[5px]">
             {messages.map((message, index) => (
-                <div
+              <div
                 key={index}
                 className={`my-[5px] ${
-                    message.sender === 'user' ? 'text-right text-[#460303]' : 'text-left text-black'
+                  message.sender === 'user' ? 'text-right text-[#460303]' : 'text-left text-black'
                 }`}
-                >
+              >
                 {message.text}
-                </div>
+              </div>
             ))}
             {loading && <div className="text-left text-black">Typing...</div>}
-        </div>
+            <div ref={messagesEndRef}></div>
+          </div>
 
           <div className="flex p-[10px] border-t border-[#ddd] bg-white">
             <input
