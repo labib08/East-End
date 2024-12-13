@@ -10,6 +10,7 @@ import profile from '../../Assets/profile_icon.png';
 import './Navbar.css';
 export const Navbar: React.FC = () => {
   const token = localStorage.getItem('token');
+  const [cartCount, setCartCount] = useState<number>(0);
   const location = useLocation();
   const url = "http://localhost:5000";
   const navigate = useNavigate();
@@ -22,11 +23,22 @@ export const Navbar: React.FC = () => {
     localStorage.setItem('activePage', path || 'home');
 
     const storedPage = localStorage.getItem('activePage');
+
     if (storedPage) {
       setPage(storedPage);
     }
 
   }, [location]);
+  useEffect(() => {
+    const handleCartCountUpdate = () => {
+      setCartCount(Number(localStorage.getItem("cartCount")));
+    };
+
+    window.addEventListener("cartCountUpdated", handleCartCountUpdate);
+    return () => {
+      window.removeEventListener("cartCountUpdated", handleCartCountUpdate);
+    };
+  }, []);
 
   useEffect(() => {
     const getAdmin = async () => {
@@ -156,7 +168,7 @@ export const Navbar: React.FC = () => {
           <img onClick = {() => onClickPage('cart')} src={cart} alt="" className="nav-login-cart-img w-10 h-auto cursor-pointer" />
         </Link>
         <div  onClick = {() => onClickPage('cart')} className="nav-cart-count w-5 h-5 flex justify-center items-center mt-[-43px] ml-[-45px] rounded-full text-[14px] bg-custom-red text-white cursor-pointer">
-          0
+          {cartCount}
         </div>
       </div>
     </div>

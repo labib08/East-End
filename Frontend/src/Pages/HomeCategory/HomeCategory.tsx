@@ -20,12 +20,16 @@ const HomeCategory: React.FC<Props> = ({category}: Props) => {
   const token = localStorage.getItem('token');
   const url = "http://localhost:5000";
   const [itemData, setItemData] = useState<Items[]>([]);
+
   const [cartItems, setCartItems] = useState<Record<string, number>>(() => {
     const savedCart = localStorage.getItem("cartItems");
     return savedCart ? JSON.parse(savedCart) : {};
   });
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    const count = Object.values(cartItems).reduce((total, quantity) => total + quantity, 0);
+    localStorage.setItem("cartCount", count.toString());
+    window.dispatchEvent(new Event("cartCountUpdated"));
   }, [cartItems]);
 
   const addToCart = async(itemID: string) => {

@@ -23,6 +23,8 @@ const Login: React.FC = () => {
         e.preventDefault();
         const response = await axios.post(`${url}/api/user/login`, formData);
         if (response.data.success) {
+            localStorage.setItem("cartCount", "0");
+            window.dispatchEvent(new Event("cartCountUpdated"));
             localStorage.clear();
             localStorage.setItem("token", response.data.token);
             navigate('/');
