@@ -8,11 +8,14 @@ module.exports = {
       },
       fontSize: {
         '40px': '40px',
+        'custom-cart-font': 'max(1vw, 8px)',
       },
       spacing: {
         50: '50px',
         3: '3px',
         40: '40px',
+        'custom-gap-cart-total': 'max(12vw, 20px)',
+        'custom-gap-promocode': 'max(10vw, 150px)',
       },
       screens: {
         'min-sm': {'max': '420px'},
