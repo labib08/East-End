@@ -106,7 +106,7 @@ export const Navbar: React.FC = () => {
         <Link to = "/"><p className="nav-logo-p text-custom-red text-[40px] font-extrabold">East End</p></Link>
         <Link to = "/"><p className="nav-logo-p-1 text-custom-red flex items-center justify-center mt-[-20px] ml-[-10px]">TM</p></Link>
       </div>
-      <img className='nav-dropdown' onClick={navbar_toggle} src={toggle} alt = ''/>
+      <img className='nav-dropdown w-[30px] h-[30px]' onClick={navbar_toggle} src={toggle} alt = ''/>
       <ul ref = {menuRef} className="nav-menu flex items-center list-none gap-50 text-black text-[20px] font-medium">
         <li onClick={() => onClickPage('home')}>
           <Link to="/" className="nav-menu-li no-underline text-black flex flex-col items-center justify-center gap-3 cursor-pointer navbar-link-tag hover:text-[rgb(83,14,14)] focus:text-[rgb(63,13,13)] transition-colors duration-400 ease-in-out">
