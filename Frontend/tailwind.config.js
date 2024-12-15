@@ -9,6 +9,10 @@ module.exports = {
       fontSize: {
         '40px': '40px',
         'custom-cart-font': 'max(1vw, 8px)',
+        'custom-welcome-font': 'max(4.2vw, 15px)',
+        'custom-welcome-button-font': 'max(1vw,19px)',
+        'custom-welcome-button-font-md': 'max(1.5vw,16px)',
+        'custom-welcome-button-font-sm': 'max(1vw,13px)',
       },
       spacing: {
         50: '50px',
