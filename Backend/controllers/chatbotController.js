@@ -1,3 +1,4 @@
+import axios from "axios";
 import fs from "fs";
 import Fuse from "fuse.js";
 import path from "path";
@@ -23,6 +24,47 @@ const fuse = new Fuse(Object.keys(qaData), {
     keys: []
 });
 
+
+let storedOrders = [];
+const handleOrderChat = async (req, res) => {
+    try {
+        const { orders } = req.body;
+
+        if (orders && orders.length > 0) {
+
+            console.log("Request from chat.py - storing orders");
+            console.log(orders);
+            storedOrders = orders;
+            return res.json({ success: true, message: "Orders stored successfully" });
+        } else {
+            console.log("Request from frontend - sending stored orders");
+            if (storedOrders.length > 0) {
+                console.log("Sending already stored orders")
+                res.json({ success: true, data: storedOrders });
+                storedOrders = [];
+                return;
+            } else {
+                console.log("No orders available")
+                return res.json({ success: false, message: "No orders available" });
+            }
+        }
+    } catch (err) {
+        console.log(err);
+        return res.json({ success: false, message: "Error" });
+    }
+};
+
+const handleChat = async(req, res) => {
+    try {
+        const userMessage = req.body.message;
+        const response = await axios.post('http://127.0.0.1:4000/chat', { message: userMessage });
+        res.json(response.data);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ error: 'Something went wrong with the chatbot' });
+    }
+}
+
 const handleChatbotMessage = async (req, res) => {
     const userMessage = req.body.message ? req.body.message.toLowerCase().trim() : '';
     if (!userMessage) {
@@ -39,5 +81,5 @@ const handleChatbotMessage = async (req, res) => {
     }
 };
 
-export { handleChatbotMessage };
+export { handleChat, handleChatbotMessage, handleOrderChat };
 

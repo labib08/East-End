@@ -57,7 +57,6 @@ const createAccount = async(req, res) => {
 }
 
 const isAdmin = async(req, res) => {
-    console.log("sup")
     try {
         const userData = await userModel.findById(req.body.userId);
         const isAdmin = userData.isAdmin;

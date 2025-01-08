@@ -1,17 +1,78 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 interface Message {
   text: string;
   sender: 'user' | 'bot';
 }
 
+interface Order {
+  quantity: number;
+  item_name: string;
+}
+
+interface Items {
+  _id: string;
+  name: string;
+  image: string;
+  price: number;
+  description: string;
+  type: string;
+}
+
+interface CartItem {
+  _id: string;
+  name: string;
+  price: number;
+  quantity: number;
+}
+type OrderItem = Items & { quantity: number };
+interface CartItems {
+  [key: string]: number;
+};
+
 const Chatbot: React.FC = () => {
   const url = "http://localhost:5000";
+  const navigate = useNavigate();
+  const firstMessage: Message = { text: "Would you like to order?", sender: 'bot' };
+  const token = localStorage.getItem('token');
+  const [flag, setFlag] = useState<boolean>(false);
   const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([firstMessage]);
   const [inputValue, setInputValue] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const [cost, setCost] = useState<number>(0.0)
+
+  const [mode, setMode] = useState<string>('isOrder');
+  const [orders, setOrders] = useState<Order[]>([]);
+
+  const [cartItems, setCartItems] = useState<Record<string, number>>({});
+  const [itemData, setItemData] = useState<Items[]>([]);
+
+  const getItemList = async() => {
+    const response = await axios.get(`${url}/api/item/list`);
+    setItemData(response.data.data|| {});
+  }
+
+  const getChatOrders = async () => {
+    const response = await axios.post(`${url}/api/chatbot/orders`);
+    //console.log(response.data)
+    if (response.data.success) {
+      setMode("confirm order")
+      //console.log(response.data.data)
+      setOrders(response.data.data)
+      const transformedCartItems = response.data.data.reduce((acc: Record<string, number>, item: { quantity: number; item_id: string }) => {
+        acc[item.item_id] = (acc[item.item_id] || 0) + item.quantity;
+        return acc;
+      }, {});
+      setCartItems(transformedCartItems);
+
+    }
+    else {
+      console.log("Error fetching order")
+    }
+  }
 
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
@@ -19,7 +80,82 @@ const Chatbot: React.FC = () => {
     setIsChatOpen((prev) => !prev);
   };
 
-  const handleSendMessage = async() => {
+
+
+  const handlePayClick = async() => {
+    if (token) {
+      const orderItems: OrderItem[] = itemData
+      .filter((item) => cartItems[item._id] > 0)
+      .map((item) => ({
+        ...item,
+        quantity: cartItems[item._id],
+      }));
+
+      const orderData = {
+        items: orderItems,
+        amount: cost + 2,
+      };
+      console.log(orderData);
+      const response = await axios.post(`${url}/api/order/details`, orderData, {headers:{token}})
+      console.log(response);
+      if (response.data.success) {
+        navigate('/order');
+      }
+      else {
+        setMode('type')
+        setLoading(true);
+        setTimeout(() => {
+          const orderMessage: Message = { text: "An error occurred please try again.", sender: 'bot' };
+          setMessages((prevMessages) => [...prevMessages, orderMessage]);
+          setLoading(false);
+        }, 500);
+      }
+    }
+    else {
+      setMode('type')
+      setLoading(true);
+      setTimeout(() => {
+        const orderMessage: Message = { text: "Please log in before ordering.", sender: 'bot' };
+        setMessages((prevMessages) => [...prevMessages, orderMessage]);
+        setLoading(false);
+      }, 500);
+    }
+  }
+
+  const handleConfirmClick = () => {
+    setMode("proceed to payment")
+
+    const userMessage: Message = { text: "yes", sender: 'user' };
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
+    const totalCost = cartItems
+    ? Object.keys(cartItems).reduce((total, id) => {
+        const item = itemData.find((item) => item._id === id);
+        if (item) {
+          total += item.price * cartItems[id];
+        }
+        return total;
+      }, 0)
+    : 0;
+    setCost(totalCost)
+    setLoading(true);
+    setTimeout(() => {
+    const formattedString = itemData
+    .filter((item) => cartItems[item._id] > 0)
+    .map(
+      (item) =>
+        `${item.name}:$${item.price.toFixed(1)} x ${cartItems[item._id]}`
+    )
+    .join(', ');
+
+    const yesOrderMessage: Message = { text: `Order Summary: ${formattedString} Total: $${totalCost.toFixed(1)}. Would you like to proceed to payment?`, sender: 'bot' };
+
+    setMessages((prevMessages) => [...prevMessages, yesOrderMessage]);
+    setLoading(false);
+  }, 0);
+
+  }
+  const handleSendMessage = async () => {
+
     if (inputValue.trim() === '') return;
 
     const userMessage: Message = { text: inputValue.trim(), sender: 'user' };
@@ -27,13 +163,54 @@ const Chatbot: React.FC = () => {
     setInputValue('');
     setLoading(true);
 
-    const response = await axios.post(`${url}/api/chatbot/chatbot`, {message: inputValue})
+    const response = await axios.post(`${url}/api/chatbot/chat`, { message: inputValue });
 
-    const botReply = response.data.reply;
+    const botReply = response.data.answer;
 
     setTimeout(() => {
       const botMessage: Message = { text: botReply, sender: 'bot' };
       setMessages((prevMessages) => [...prevMessages, botMessage]);
+      setLoading(false);
+    }, 500);
+    getChatOrders();
+  };
+
+  const handleYesClick = async(firstOrder: boolean) => {
+    //console.log(itemData)
+    setFlag(true);
+    setMode('type');
+    const yesOrderMessage: Message = firstOrder
+    ? { text: "Yes", sender: 'user' }
+    : { text: "I'd like to reorder", sender: 'user' };
+    setMessages((prevMessages) => [...prevMessages, yesOrderMessage]);
+    setLoading(true);
+
+    const response = await axios.post(`${url}/api/chatbot/chat`, { message: "order" });
+
+    const botReply = response.data.answer;
+
+    setTimeout(() => {
+      const botMessage: Message = { text: botReply, sender: 'bot' };
+      setMessages((prevMessages) => [...prevMessages, botMessage]);
+      setLoading(false);
+    }, 500);
+    // setLoading(true);
+    // setTimeout(() => {
+    //   const orderMessage: Message = { text: "What would you like to order?", sender: 'bot' };
+    //   setMessages((prevMessages) => [...prevMessages, orderMessage]);
+    //   setLoading(false);
+    // }, 500);
+  };
+
+  const handleNoClick = () => {
+    setFlag(true);
+    setMode('type');
+    const noOrderMessage: Message = { text: "No", sender: 'user' };
+    setMessages((prevMessages) => [...prevMessages, noOrderMessage]);
+    setLoading(true);
+    setTimeout(() => {
+      const orderMessage: Message = { text: "Hey!", sender: 'bot' };
+      setMessages((prevMessages) => [...prevMessages, orderMessage]);
       setLoading(false);
     }, 500);
   };
@@ -41,7 +218,9 @@ const Chatbot: React.FC = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
-
+  useEffect(() => {
+    getItemList();
+  }, []);
   return (
     <div className="fixed bottom-[20px] right-[20px] font-sans z-[1000]">
       <button
@@ -73,25 +252,74 @@ const Chatbot: React.FC = () => {
             {loading && <div className="text-left text-black">Typing...</div>}
             <div ref={messagesEndRef}></div>
           </div>
-
-          <div className="flex p-[10px] border-t border-[#ddd] bg-white">
-            <input
-              type="text"
-              className="flex-1 p-[5px] border border-[#ddd] rounded-[5px] text-[#460303]"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Type your question..."
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') handleSendMessage();
-              }}
-            />
-            <button
-              onClick={handleSendMessage}
-              className="ml-[5px] bg-[rgb(92,22,22)] text-white border-0 rounded-[5px] px-[10px] py-[5px] cursor-pointer"
-            >
-              Send
-            </button>
-          </div>
+          {mode === "type" && (
+            <div className="flex p-[10px] border-t border-[#ddd] bg-white">
+              <input
+                type="text"
+                className="flex-1 p-[5px] border border-[#ddd] rounded-[5px] text-[#460303]"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                placeholder="Type your question..."
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') handleSendMessage();
+                }}
+              />
+              <button
+                onClick={handleSendMessage}
+                className="ml-[5px] bg-[rgb(92,22,22)] text-white border-0 rounded-[5px] px-[10px] py-[5px] cursor-pointer"
+              >
+                Send
+              </button>
+            </div>
+          )}
+          {mode === "isOrder" && (
+            <div className="flex justify-center p-[10px] border-t border-[#ddd] bg-white">
+              <button
+                className="bg-[rgb(92,22,22)] text-white px-[15px] py-[5px] rounded-[5px] mx-[5px] cursor-pointer hover:bg-[rgb(122,22,22)]"
+                onClick={() => handleYesClick(true)}
+              >
+                Yes
+              </button>
+              <button
+                className="bg-[rgb(92,22,22)] text-white px-[15px] py-[5px] rounded-[5px] mx-[5px] cursor-pointer hover:bg-[rgb(122,22,22)]"
+                onClick={handleNoClick}
+              >
+                No
+              </button>
+            </div>
+          )}
+          {mode === "confirm order" && (
+            <div className="flex justify-center p-[10px] border-t border-[#ddd] bg-white">
+              <button
+                className="bg-[rgb(92,22,22)] text-white px-[15px] py-[5px] rounded-[5px] mx-[5px] cursor-pointer hover:bg-[rgb(122,22,22)]"
+                onClick={handleConfirmClick}
+              >
+                Confirm
+              </button>
+              <button
+                className="bg-[rgb(92,22,22)] text-white px-[15px] py-[5px] rounded-[5px] mx-[5px] cursor-pointer hover:bg-[rgb(122,22,22)]"
+                onClick={() => handleYesClick(false)}
+              >
+                Reorder
+              </button>
+            </div>
+          )}
+          {mode === "proceed to payment" && (
+            <div className="flex justify-center p-[10px] border-t border-[#ddd] bg-white">
+              <button
+                className="bg-[rgb(92,22,22)] text-white px-[15px] py-[5px] rounded-[5px] mx-[5px] cursor-pointer hover:bg-[rgb(122,22,22)]"
+                onClick={handlePayClick}
+              >
+                Pay
+              </button>
+              <button
+                className="bg-[rgb(92,22,22)] text-white px-[15px] py-[5px] rounded-[5px] mx-[5px] cursor-pointer hover:bg-[rgb(122,22,22)]"
+                onClick={() => handleYesClick(false)}
+              >
+                Reorder
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

@@ -1,0 +1,163 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hi",
+        "Hii",
+        "Hiii",
+        "Hiiii",
+        "Hiiiii",
+        "Hiiiiii",
+        "Hiiiiiii",
+        "Hiiiiiiii",
+        "Heyyyyyyy",
+        "Heyyyyyy",
+        "Heyyyyy",
+        "Heyyyy",
+        "Heyyy",
+        "Heyy",
+        "Hey",
+        "How are you",
+        "Is anyone there?",
+        "Hello",
+        "Good day"
+      ],
+      "responses": [
+        "Hey :-)",
+        "Hello, thanks for visiting",
+        "Hi there, what can I do for you?",
+        "Hi there, how can I help?"
+      ]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": ["Bye", "See you later", "Goodbye"],
+      "responses": [
+        "See you later, thanks for visiting",
+        "Have a nice day",
+        "Bye! Come back again soon."
+      ]
+    },
+    {
+      "tag": "thanks",
+      "patterns": ["Thanks", "Thank you", "That's helpful", "Thank's a lot!", "Thanks very much", "Thanks v much", "Thnx"],
+      "responses": ["Happy to help!", "Any time!", "My pleasure"]
+    },
+    {
+      "tag": "items",
+      "patterns": [
+        "Which items do you have?",
+        "What kinds of items are there?",
+        "What do you sell?",
+        "What can I get",
+        "What can I have",
+        "What service do you provide"
+      ],
+      "responses": [
+        "We sell coffee and dessert",
+        "We have coffee and dessert"
+      ]
+    },
+    {
+      "tag": "payments",
+      "patterns": [
+        "Do you take credit cards?",
+        "Do you accept Mastercard?",
+        "Can I pay with Paypal?",
+        "Are you cash only?"
+      ],
+      "responses": [
+        "We accept VISA, Mastercard and Paypal",
+        "We accept most major credit cards, and Paypal"
+      ]
+    },
+    {
+      "tag": "delivery",
+      "patterns": [
+        "How long does delivery take?",
+        "How long does shipping take?",
+        "When do I get my delivery?"
+      ],
+      "responses": [
+        "Delivery takes 30 minutes maximum"
+      ]
+    },
+    {
+      "tag": "funny",
+      "patterns": [
+        "Tell me a joke!",
+        "Tell me something funny!",
+        "Do you know a joke?"
+      ],
+      "responses": [
+        "Why did the hipster burn his mouth? He drank the coffee before it was cool.",
+        "What did the buffalo say when his son left for college? Bison."
+      ]
+    },
+    {
+      "tag": "help",
+      "patterns": [
+        "What can you help me with?",
+        "I need help",
+        "Help",
+        "Can I get any help here?",
+        "Please help me"
+      ],
+      "responses": [
+        "Sure, here are some things you can ask me:\n- How to Signup and Login\n- Why cannot I order\n- How to make payment\n- How to Login\n- How to Logout"
+      ]
+    },
+    {
+      "tag": "signup",
+      "patterns": [
+        "How to Signup"
+      ],
+      "responses": [
+        "To SignUp, go to the Login button on the top right and on the bottom there will be a link for SignUp. SignUp and then go back to the Login page to login"
+      ]
+    },
+    {
+      "tag": "order",
+      "patterns": [
+        "I want to order",
+        "I would like to order",
+        "Order",
+        "Can I order?"
+      ],
+      "responses": [
+        "Sure, what would you like to order?"
+      ]
+    },
+    {
+      "tag": "payment",
+      "patterns": [
+        "How to make payment?",
+        "How do I pay?",
+        "How do I make payment?",
+        "How to pay?"
+      ],
+      "responses": [
+        "Go to https://docs.stripe.com/testing website and select 'Cards by country' on the tab on the right. Search Australia and copy the 16-digit card number. Go back to the Payment section and paste the card number. Then fill the expiry date with any valid future date and fill the CVV/CVC section with any random 3 digit number. Fill the other sections and press the Pay button"
+      ]
+    },
+    {
+      "tag": "logout",
+      "patterns": [
+        "How to logout?"
+      ],
+      "responses": [
+        "Press the icon on top right that looks like a person, and there will be an option to logout"
+      ]
+    },
+    {
+      "tag": "login",
+      "patterns": [
+        "How to login?"
+      ],
+      "responses": [
+        "Press the login button on top right"
+      ]
+    }
+  ]
+}

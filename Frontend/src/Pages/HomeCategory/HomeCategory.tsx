@@ -41,6 +41,7 @@ const HomeCategory: React.FC<Props> = ({category}: Props) => {
     if (token) {
       await axios.post(`${url}/api/cart/add`, {itemID}, {headers:{token}});
     }
+    console.log(cartItems)
   };
 
   const removeFromCart = async(itemID: string) => {
@@ -67,7 +68,6 @@ const HomeCategory: React.FC<Props> = ({category}: Props) => {
   const getItemList = async() => {
     const response = await axios.get(`${url}/api/item/list`);
     setItemData(response.data.data|| {});
-
   }
   useEffect(() => {
     async function loadItemData() {
