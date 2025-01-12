@@ -43,6 +43,7 @@ const Chatbot: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [cost, setCost] = useState<number>(0.0)
+  const [isDelivery, setIsDelivery] = useState<boolean>(false);
 
   const [mode, setMode] = useState<string>('isOrder');
   const [orders, setOrders] = useState<Order[]>([]);
@@ -80,10 +81,10 @@ const Chatbot: React.FC = () => {
     setIsChatOpen((prev) => !prev);
   };
 
-
-
   const handlePayClick = async() => {
+    setMode('type')
     if (token) {
+      await axios.post(`${url}/api/order/delete`, {}, {headers: {token}})
       const orderItems: OrderItem[] = itemData
       .filter((item) => cartItems[item._id] > 0)
       .map((item) => ({
@@ -100,9 +101,10 @@ const Chatbot: React.FC = () => {
       console.log(response);
       if (response.data.success) {
         navigate('/order');
+        const userMessage: Message = { text: "yes", sender: 'user' };
+        setMessages((prevMessages) => [...prevMessages, userMessage]);
       }
       else {
-        setMode('type')
         setLoading(true);
         setTimeout(() => {
           const orderMessage: Message = { text: "An error occurred please try again.", sender: 'bot' };
@@ -194,12 +196,6 @@ const Chatbot: React.FC = () => {
       setMessages((prevMessages) => [...prevMessages, botMessage]);
       setLoading(false);
     }, 500);
-    // setLoading(true);
-    // setTimeout(() => {
-    //   const orderMessage: Message = { text: "What would you like to order?", sender: 'bot' };
-    //   setMessages((prevMessages) => [...prevMessages, orderMessage]);
-    //   setLoading(false);
-    // }, 500);
   };
 
   const handleNoClick = () => {
@@ -301,6 +297,22 @@ const Chatbot: React.FC = () => {
                 onClick={() => handleYesClick(false)}
               >
                 Reorder
+              </button>
+            </div>
+          )}
+          {mode === "dine in or delivery" && (
+            <div className="flex justify-center p-[10px] border-t border-[#ddd] bg-white">
+              <button
+                className="bg-[rgb(92,22,22)] text-white px-[15px] py-[5px] rounded-[5px] mx-[5px] cursor-pointer hover:bg-[rgb(122,22,22)]"
+                onClick={handlePayClick}
+              >
+                Dine In
+              </button>
+              <button
+                className="bg-[rgb(92,22,22)] text-white px-[15px] py-[5px] rounded-[5px] mx-[5px] cursor-pointer hover:bg-[rgb(122,22,22)]"
+                onClick={() => handleYesClick(false)}
+              >
+                Delivery
               </button>
             </div>
           )}

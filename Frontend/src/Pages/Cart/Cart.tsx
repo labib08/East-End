@@ -112,8 +112,8 @@ const Cart: React.FC<Props> = ({itemData, addToCart, removeFromCart, cartItems, 
               </div>
             </div>
             {isEmpty ?
-              <button onClick={() => alert('Your cart is empty')} className="border-none text-white bg-[#5c1616] w-[max(15vw,200px)] py-[12px] rounded-full cursor-pointer">CHECKOUT</button>
-            : <button onClick={onClickSubmit} className="border-none text-white bg-[#5c1616] w-[max(15vw,200px)] py-[12px] rounded-full cursor-pointer">CHECKOUT</button>
+              <button onClick={() => alert('Your cart is empty')} className="border-none text-white bg-[#5c1616] w-[max(15vw,200px)] py-[12px] rounded-full cursor-pointer transition-colors duration-300 ease-in-out hover:bg-[rgb(120,30,30)]">CHECKOUT</button>
+            : <button onClick={onClickSubmit} className="border-none text-white bg-[#5c1616] w-[max(15vw,200px)] py-[12px] rounded-full cursor-pointer transition-colors duration-300 ease-in-out hover:bg-[rgb(120,30,30)]">CHECKOUT</button>
             }
 
           </div>
