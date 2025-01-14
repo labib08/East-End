@@ -20,10 +20,13 @@ const deleteOrderDetails = async(req, res) => {
 
 const getOrderDetails = async(req, res) => {
     try {
+        const account = await userModel.findById(req.body.userId)
         const newOrder = new orderModel({
             userId: req.body.userId,
+            name: account.name,
             items: req.body.items,
             amount: req.body.amount,
+            seatNum: -1,
             address:{},
         })
         await newOrder.save();
@@ -37,9 +40,19 @@ const getOrderDetails = async(req, res) => {
 
 const placeOrder = async(req, res) => {
     const url = "http://localhost:3000"
-    const {formData} = req.body;
+    const {selectedTable, formData} = req.body;
+    let newOrder;
+
     try {
-        const newOrder = await orderModel.findOneAndUpdate({userId: req.body.userId}, {address: formData});
+        const data = selectedTable || formData;
+        if (typeof data === 'string') {
+
+            newOrder = await orderModel.findOneAndUpdate({userId: req.body.userId, status: "Waiting For Payment"}, {seatNum: data});
+        }
+        else if (typeof data === 'object' && data !== null && !Array.isArray(data)) {
+
+            newOrder = await orderModel.findOneAndUpdate({userId: req.body.userId, status: "Waiting For Payment"}, {address: data});
+        }
         let userData = await userModel.findById(req.body.userId);
         let cartData = userData.cartData;
         cartData = {};

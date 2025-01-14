@@ -6,12 +6,6 @@ interface Message {
   text: string;
   sender: 'user' | 'bot';
 }
-
-interface Order {
-  quantity: number;
-  item_name: string;
-}
-
 interface Items {
   _id: string;
   name: string;
@@ -21,35 +15,63 @@ interface Items {
   type: string;
 }
 
-interface CartItem {
-  _id: string;
-  name: string;
-  price: number;
-  quantity: number;
-}
 type OrderItem = Items & { quantity: number };
-interface CartItems {
-  [key: string]: number;
-};
 
 const Chatbot: React.FC = () => {
   const url = "http://localhost:5000";
   const navigate = useNavigate();
   const firstMessage: Message = { text: "Would you like to order?", sender: 'bot' };
   const token = localStorage.getItem('token');
-  const [flag, setFlag] = useState<boolean>(false);
   const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
   const [messages, setMessages] = useState<Message[]>([firstMessage]);
   const [inputValue, setInputValue] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [cost, setCost] = useState<number>(0.0)
-  const [isDelivery, setIsDelivery] = useState<boolean>(false);
 
   const [mode, setMode] = useState<string>('isOrder');
-  const [orders, setOrders] = useState<Order[]>([]);
 
   const [cartItems, setCartItems] = useState<Record<string, number>>({});
   const [itemData, setItemData] = useState<Items[]>([]);
+  const [selectedTable, setSelectedTable] = useState<string | null>(null);
+
+  const handleSeatSelection = (seat: string): void => {
+    setSelectedTable(seat);
+  };
+
+  const confirmSeatSelection = async() => {
+    if (selectedTable) {
+      setMode('type')
+      const seatMessage: Message = { text: `Seat number ${selectedTable} selected`, sender: 'bot' };
+      setMessages((prevMessages) => [...prevMessages, seatMessage]);
+      let response = await order();
+      if (response.data.success) {
+        let response = await axios.post(`${url}/api/order/place`, {selectedTable}, {headers:{token}})
+        if (response.data.success) {
+          const {session_url} = response.data;
+          window.location.replace(session_url);
+        }
+        else {
+          setLoading(true);
+          setTimeout(() => {
+            const orderMessage: Message = { text: "An error occurred please try again.", sender: 'bot' };
+            setMessages((prevMessages) => [...prevMessages, orderMessage]);
+            setLoading(false);
+          }, 500);
+        }
+      }
+      else {
+        setLoading(true);
+        setTimeout(() => {
+          const orderMessage: Message = { text: "An error occurred please try again.", sender: 'bot' };
+          setMessages((prevMessages) => [...prevMessages, orderMessage]);
+          setLoading(false);
+        }, 500);
+      }
+    } else {
+      const errorMessage: Message = { text: "Please select a valid seat number", sender: 'bot' };
+      setMessages((prevMessages) => [...prevMessages, errorMessage]);
+    }
+  };
 
   const getItemList = async() => {
     const response = await axios.get(`${url}/api/item/list`);
@@ -58,11 +80,9 @@ const Chatbot: React.FC = () => {
 
   const getChatOrders = async () => {
     const response = await axios.post(`${url}/api/chatbot/orders`);
-    //console.log(response.data)
+
     if (response.data.success) {
       setMode("confirm order")
-      //console.log(response.data.data)
-      setOrders(response.data.data)
       const transformedCartItems = response.data.data.reduce((acc: Record<string, number>, item: { quantity: number; item_id: string }) => {
         acc[item.item_id] = (acc[item.item_id] || 0) + item.quantity;
         return acc;
@@ -80,11 +100,16 @@ const Chatbot: React.FC = () => {
   const toggleChatWindow = () => {
     setIsChatOpen((prev) => !prev);
   };
+  const handleDineIn = async () => {
+    const dineInMessage: Message = { text: "Dine In", sender: 'user' };
+    setMessages((prevMessages) => [...prevMessages, dineInMessage]);
+    const seatNumMessage: Message = { text: "Please select a seat number", sender: 'bot' };
+    setMessages((prevMessages) => [...prevMessages, seatNumMessage]);
+    setMode('seatNum')
 
-  const handlePayClick = async() => {
-    setMode('type')
-    if (token) {
-      await axios.post(`${url}/api/order/delete`, {}, {headers: {token}})
+  }
+  const order = async() => {
+    await axios.post(`${url}/api/order/delete`, {}, {headers: {token}})
       const orderItems: OrderItem[] = itemData
       .filter((item) => cartItems[item._id] > 0)
       .map((item) => ({
@@ -98,20 +123,37 @@ const Chatbot: React.FC = () => {
       };
       console.log(orderData);
       const response = await axios.post(`${url}/api/order/details`, orderData, {headers:{token}})
-      console.log(response);
-      if (response.data.success) {
-        navigate('/order');
-        const userMessage: Message = { text: "yes", sender: 'user' };
-        setMessages((prevMessages) => [...prevMessages, userMessage]);
-      }
-      else {
-        setLoading(true);
+      return response;
+  }
+  const handleDelivery = async() => {
+    const deliveryMessage: Message = { text: "Delivery", sender: 'user' };
+    setMessages((prevMessages) => [...prevMessages, deliveryMessage]);
+    setMode('type')
+    const response = await order();
+    if (response.data.success) {
+      navigate('/order');
+    }
+    else {
+      setLoading(true);
+      setTimeout(() => {
+        const orderMessage: Message = { text: "An error occurred please try again.", sender: 'bot' };
+        setMessages((prevMessages) => [...prevMessages, orderMessage]);
+        setLoading(false);
+      }, 500);
+    }
+  }
+  const handlePayClick = async() => {
+    //setMode('type')
+    if (token) {
+      setMode('dine in or delivery')
+      const yesOrderMessage: Message = { text: "Yes", sender: 'user' };
+      setMessages((prevMessages) => [...prevMessages, yesOrderMessage]);
+      setLoading(true);
         setTimeout(() => {
-          const orderMessage: Message = { text: "An error occurred please try again.", sender: 'bot' };
+          const orderMessage: Message = { text: "Dine-In or Delivery?", sender: 'bot' };
           setMessages((prevMessages) => [...prevMessages, orderMessage]);
           setLoading(false);
         }, 500);
-      }
     }
     else {
       setMode('type')
@@ -122,6 +164,7 @@ const Chatbot: React.FC = () => {
         setLoading(false);
       }, 500);
     }
+
   }
 
   const handleConfirmClick = () => {
@@ -179,7 +222,6 @@ const Chatbot: React.FC = () => {
 
   const handleYesClick = async(firstOrder: boolean) => {
     //console.log(itemData)
-    setFlag(true);
     setMode('type');
     const yesOrderMessage: Message = firstOrder
     ? { text: "Yes", sender: 'user' }
@@ -199,7 +241,6 @@ const Chatbot: React.FC = () => {
   };
 
   const handleNoClick = () => {
-    setFlag(true);
     setMode('type');
     const noOrderMessage: Message = { text: "No", sender: 'user' };
     setMessages((prevMessages) => [...prevMessages, noOrderMessage]);
@@ -300,22 +341,6 @@ const Chatbot: React.FC = () => {
               </button>
             </div>
           )}
-          {mode === "dine in or delivery" && (
-            <div className="flex justify-center p-[10px] border-t border-[#ddd] bg-white">
-              <button
-                className="bg-[rgb(92,22,22)] text-white px-[15px] py-[5px] rounded-[5px] mx-[5px] cursor-pointer hover:bg-[rgb(122,22,22)]"
-                onClick={handlePayClick}
-              >
-                Dine In
-              </button>
-              <button
-                className="bg-[rgb(92,22,22)] text-white px-[15px] py-[5px] rounded-[5px] mx-[5px] cursor-pointer hover:bg-[rgb(122,22,22)]"
-                onClick={() => handleYesClick(false)}
-              >
-                Delivery
-              </button>
-            </div>
-          )}
           {mode === "proceed to payment" && (
             <div className="flex justify-center p-[10px] border-t border-[#ddd] bg-white">
               <button
@@ -332,6 +357,47 @@ const Chatbot: React.FC = () => {
               </button>
             </div>
           )}
+          {mode === "dine in or delivery" && (
+            <div className="flex justify-center p-[10px] border-t border-[#ddd] bg-white">
+              <button
+                className="bg-[rgb(92,22,22)] text-white px-[15px] py-[5px] rounded-[5px] mx-[5px] cursor-pointer hover:bg-[rgb(122,22,22)]"
+                onClick={handleDineIn}
+              >
+                Dine In
+              </button>
+              <button
+                className="bg-[rgb(92,22,22)] text-white px-[15px] py-[5px] rounded-[5px] mx-[5px] cursor-pointer hover:bg-[rgb(122,22,22)]"
+                onClick={handleDelivery}
+              >
+                Delivery
+              </button>
+            </div>
+          )}
+          {mode === "seatNum" && (
+        <div className="flex flex-col items-center p-[10px] border-t border-[#ddd] bg-white">
+          <p className="mb-[10px] text-[14px] font-medium">Select a seat number:</p>
+          <select
+            value={selectedTable ?? ""}
+            onChange={(e) => handleSeatSelection(e.target.value)}
+            className="border border-[#ddd] rounded-[5px] p-[5px] text-[14px] w-[160px] text-center"
+          >
+            <option value="" disabled>
+              Select seat number
+            </option>
+            {Array.from({ length: 20 }, (_, i) => (
+              <option key={i + 1} value={String(i + 1)}>
+                {i + 1}
+              </option>
+            ))}
+          </select>
+          <button
+            className="bg-[rgb(92,22,22)] text-white px-[15px] py-[5px] rounded-[5px] mx-[5px] cursor-pointer hover:bg-[rgb(122,22,22)] mt-[10px]"
+            onClick={confirmSeatSelection}
+          >
+            Confirm
+          </button>
+        </div>
+      )}
         </div>
       )}
     </div>

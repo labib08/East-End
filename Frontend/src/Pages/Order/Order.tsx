@@ -45,6 +45,17 @@ const Order = () => {
     setFormData({...formData, [name]:value});
   }
 
+  const handleSubmitDineIn = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    console.log(selectedTable)
+    let response = await axios.post(`${url}/api/order/place`, {selectedTable}, {headers:{token}})
+    if (response.data.success) {
+      const {session_url} = response.data;
+      window.location.replace(session_url);
+    }
+    else {
+      toast.error(response.data.message);
+    }
+  }
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let response = await axios.post(`${url}/api/order/place`, {formData}, {headers:{token}})
@@ -150,7 +161,7 @@ const Order = () => {
             Selected Table: <b>Table {selectedTable}</b>
           </p>
           <button
-            onClick={() => alert(`Proceeding with Table ${selectedTable}`)}
+            onClick={handleSubmitDineIn}
             className="mt-6 border-none text-white bg-[rgb(92,22,22)] w-[max(15vw,200px)] py-[12px] px-0 rounded-[75px] cursor-pointer transition-colors duration-300 ease-in-out hover:bg-[rgb(120,30,30)]"
           >
             CONFIRM TABLE

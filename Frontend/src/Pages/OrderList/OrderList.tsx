@@ -28,9 +28,11 @@ interface OrderItem {
 interface Order {
   _id: string;
   userId: string;
+  name: string;
   items: OrderItem[];
   amount: number;
   status: string;
+  seatNum: string;
   payment: boolean;
   date: Date;
   __v: number;
@@ -43,7 +45,7 @@ const OrderList: React.FC = () => {
   const fetchAllOrders = async () => {
     const response = await axios.get(`${url}/api/order/listorders`)
     if (response.data.success) {
-      setOrders(response.data.data);
+      setOrders(response.data.data.reverse());
     }
     else {
       toast.error(response.data.message);
@@ -68,7 +70,7 @@ const OrderList: React.FC = () => {
       <h3 className="font-[600]">Order Page</h3>
       <div>
         {orders
-          .filter(order => order.address)
+          .filter(order => order.status !== "Waiting For Payment")
           .map((order, index) => (
             <div
               key={index}
@@ -83,28 +85,50 @@ const OrderList: React.FC = () => {
                       : item.name + " x " + item.quantity + ", "
                   )}
                 </p>
-                <p className="mt-[30px] mb-[5px] font-[600]">
-                  {`${order.address?.firstName} ${order.address?.lastName}`}
-                </p>
-                <div className="mb-[10px]">
-                  <p>{order.address?.street + ", "}</p>
-                  <p>
-                    {`${order.address?.city}, ${order.address?.state}, ${order.address?.country}, ${order.address?.postcode}`}
+                {order.address?.firstName && (
+                  <>
+                  <p className="mt-[30px] mb-[5px] font-[600]">
+                    {`${order.address?.firstName} ${order.address?.lastName}`}
                   </p>
-                </div>
-                <p>{order.address?.phone}</p>
+                  <div className="mb-[10px]">
+                    <p>{order.address?.street + ", "}</p>
+                    <p>
+                      {`${order.address?.city}, ${order.address?.state}, ${order.address?.country}, ${order.address?.postcode}`}
+                  </p>
+                  </div>
+                  <p>{order.address?.phone}</p>
+                  </>
+                )}
+                {order.seatNum !== "-1" && (
+                  <>
+                  <p className="mt-[30px] mb-[5px] font-[600]">
+                    {`${order.name}`}
+                  </p>
+                  <p>Seat Number: {order.seatNum}</p>
+                  </>
+                )}
+
               </div>
               <p>Items: {order.items.length}</p>
               <p>${order.amount ? order.amount.toFixed(1) : "0.0"}</p>
               <select
-                onChange={(e) => statusHandler(e, order._id)}
-                value={order.status}
-                className="bg-[#ffe8e4] border border-[rgb(92,22,22)] w-[max(16.2vw,120px)] p-[10px] text-[14px] outline-none md-lg:p-[5px] md-lg:text-[12px]"
-              >
-                <option value="Restaurant is making the item">Restaurant is making the item</option>
-                <option value="Rider has picked up the order">Rider has picked up the order</option>
-                <option value="Delivered">Delivered</option>
-              </select>
+              onChange={(e) => statusHandler(e, order._id)}
+              value={order.status}
+              className="bg-[#ffe8e4] border border-[rgb(92,22,22)] w-[max(16.2vw,120px)] p-[10px] text-[14px] outline-none md-lg:p-[5px] md-lg:text-[12px]"
+            >
+              {order.seatNum === "-1" ? (
+                <>
+                  <option value="Restaurant is making the item">Restaurant is making the item</option>
+                  <option value="Rider has picked up the order">Rider has picked up the order</option>
+                  <option value="Delivered">Delivered</option>
+                </>
+              ) : (
+                <>
+                  <option value="Restaurant is making the item">Restaurant is making the item</option>
+                  <option value="Your Order is ready">Your Order is ready</option>
+                </>
+              )}
+            </select>
             </div>
           ))}
       </div>
