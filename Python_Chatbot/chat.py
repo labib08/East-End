@@ -49,8 +49,6 @@ def get_item_list():
         data = response.json().get('data', [])
         name_id_dict = {item['name'].lower(): item['_id'] for item in data if 'name' in item and '_id' in item}
         name_mapping_dict = {item['name'].lower(): item['name'].lower() for item in data if 'name' in item}
-        print(name_mapping_dict)
-
     else:
         print("Failed to fetch data:", response.status_code)
 
@@ -77,6 +75,7 @@ def find_items(item):
         return answer
     else:
         return "Not available"
+
 def parse_order(user_input):
 
     pattern = r"(\d+)\s*x?\s*([a-zA-Z\s]+)"
@@ -110,7 +109,6 @@ def get_response(msg):
 
             order_message = [f"{order['quantity']} x {order['item_name']}" for order in orders]
             order_messages = "\n".join(order_message)
-            print(orders)
             backend_response = send_order_to_backend(orders)
             #print(f"Backend response: {backend_response}")
             return order_messages + ". Is that all?"
