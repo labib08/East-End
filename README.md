@@ -81,3 +81,43 @@ Install nltk package
 >>> nltk.download('punkt')
 ```
 Go to the app.py and press run
+
+# Technologies Used
+* **Frontend:** React, TypeScript, Tailwind CSS
+* **Backend:** Node.js, Express.js, REST API
+* **Database:** MongoDB
+* **Machine Learning:** Python, PyTorch, NLTK
+* **Chatbot:** Flask, Natural Language Processing (NLP), Doc2Vec, FastText
+* **Other Libraries:** Fuzzy Matching for product extraction and mapping
+
+# Features
+
+**1. Responsive Frontend:**
+
+User-friendly and visually appealing interface to browse products and make payments.
+Fully responsive design for seamless usage across devices.
+
+**2. Comprehensive Backend:**
+
+REST API for user authentication, product management, and order processing.
+Robust data handling for user, product, and order information using MongoDB.
+
+**3. AI-Powered Chatbot:**
+
+Handles customer inquiries and processes product orders directly via chat.
+Utilizes PyTorch for intent classification and response generation.
+NLP techniques, such as tokenization, stemming, and bag-of-words, for accurate text understanding.
+
+**4. Order Processing:**
+
+Extracts product names and quantities from user input using fuzzy matching logic.
+Allows users to place orders directly through the chatbot.
+
+**5. Performance Optimization:**
+
+Hyperparameter tuning for machine learning models.
+Robust parsing logic ensures smooth integration between chatbot and database.
+
+**6. Streamlined Customer Experience:**
+
+Simplifies the ordering process by enabling users to navigate and complete transactions through the chatbot.
