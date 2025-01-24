@@ -32,7 +32,13 @@ const Cart: React.FC<Props> = ({itemData, addToCart, removeFromCart, cartItems, 
     const hasItems = Object.values(cartItems).some((count) => count > 0);
     setIsEmpty(!hasItems);
   }, [cartItems]);
-
+  const getSubtotalAndGST = () => {
+    const total = getTotal();
+    const gst = total / 1.1 * 0.1;
+    const subtotal = total - gst;
+    return { subtotal, gst };
+  };
+  const { subtotal, gst } = getSubtotalAndGST();
   const onClickSubmit = async() => {
     await axios.post(`${url}/api/order/delete`, {}, {headers: {token}})
     let orderItems: OrderItem[] = itemData
@@ -43,7 +49,7 @@ const Cart: React.FC<Props> = ({itemData, addToCart, removeFromCart, cartItems, 
     }));
     let orderData = {
       items: orderItems,
-      amount: getTotal() + 2,
+      amount: getTotal(),
     }
 
     console.log("Order Data:", orderData);
@@ -98,17 +104,17 @@ const Cart: React.FC<Props> = ({itemData, addToCart, removeFromCart, cartItems, 
             <div>
               <div className="flex justify-between text-[#555]">
                 <p>Subtotal</p>
-                <p> ${getTotal().toFixed(1)} </p>
+                <p> ${subtotal.toFixed(1)} </p>
               </div>
               <hr className="h-[1px] bg-[#c6c5c5] border-0 my-[20px]" />
               <div className="flex justify-between text-[#555]">
-                <p>Delivery Fee</p>
-                <p> ${(getTotal() === 0 ? 0: 2).toFixed(1)} </p>
+                <p>GST</p>
+                <p> ${(getTotal() === 0 ? 0: gst).toFixed(1)} </p>
               </div>
               <hr className="h-[1px] bg-[#c6c5c5] border-0 my-[20px]"/>
               <div className="flex justify-between text-[#555]">
                 <b>Total</b>
-                <b> ${ (getTotal() === 0 ?0: getTotal() + 2).toFixed(1) } </b>
+                <b> ${ (getTotal()).toFixed(1) } </b>
               </div>
             </div>
             {isEmpty ?

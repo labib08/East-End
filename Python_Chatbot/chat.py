@@ -16,12 +16,17 @@ with open('Python_Chatbot/intents.json', 'r') as json_data:
 FILE = "data.pth"
 data = torch.load(FILE)
 
-qa_data = {
-    "vanilla": "vanilla",
-    "chocolate": "chocolate",
-    "strawberry": "strawberry",
-    "coffee": "coffee",
-    "dessert": "dessert"
+number_words = {
+    "one": 1,
+    "two": 2,
+    "three": 3,
+    "four": 4,
+    "five": 5,
+    "six": 6,
+    "seven": 7,
+    "eight": 8,
+    "nine": 9,
+    "ten": 10
 }
 
 input_size = data["input_size"]
@@ -56,8 +61,6 @@ def get_item_list():
 def send_order_to_backend(orders):
 
     try:
-        #print("Order here: ")
-        #print(orders)
         response = requests.post(BACKEND_URL_CHATBOT, json={"orders": orders})
         return response.json()
     except requests.exceptions.RequestException as e:
@@ -105,12 +108,9 @@ def get_response(msg):
         if orders:
             if orders[0] == "Not available":
                 return "One or more items is not available, please choose an item from the menu"
-            #print("Chatbot: Here is what I understood from your order:")
-
             order_message = [f"{order['quantity']} x {order['item_name']}" for order in orders]
             order_messages = "\n".join(order_message)
             backend_response = send_order_to_backend(orders)
-            #print(f"Backend response: {backend_response}")
             return order_messages + ". Is that all?"
 
     sentence = tokenize(msg)
