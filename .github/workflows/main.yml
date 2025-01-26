@@ -40,6 +40,18 @@ jobs:
         run: |
           cd Backend
           npm install
+
+      - name: Set up Virtual Environment for Flask Backend
+        run: |
+          cd Python_Chatbot
+          python -m venv venv
+          . venv/bin/activate
+
+      - name: Install Python Backend Dependencies
+        run: |
+          cd Python_Chatbot
+          . venv/bin/activate
+          pip install -r requirements.txt
   
   deploy:
     needs: build-and-test
@@ -51,4 +63,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          publish_dir: build
