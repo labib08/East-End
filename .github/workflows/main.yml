@@ -29,7 +29,7 @@ jobs:
       - name: Run Frontend Tests
         run: |
           cd Frontend
-          npm test -- --coverage
+          npm run test
         
       - name: Build Frontend
         run: |
