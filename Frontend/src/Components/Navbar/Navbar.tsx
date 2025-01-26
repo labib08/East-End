@@ -158,7 +158,7 @@ export const Navbar: React.FC = () => {
         </div>
         ) : (
           <Link to="/login">
-            <button className="nav-login-cart-button w-36 h-12 outline-none border border-[#a3a3a3] rounded-full text-black text-lg font-medium bg-white cursor-pointer hover:shadow-[2px_2px_5px_0px_rgba(0,0,0,0.5)] active:bg-[rgb(164,162,162)]">
+            <button type = "button" className="nav-login-cart-button w-36 h-12 outline-none border border-[#a3a3a3] rounded-full text-black text-lg font-medium bg-white cursor-pointer hover:shadow-[2px_2px_5px_0px_rgba(0,0,0,0.5)] active:bg-[rgb(164,162,162)]">
               Login
             </button>
           </Link>
