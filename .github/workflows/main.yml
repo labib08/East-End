@@ -1,4 +1,4 @@
-name: CI/CD for React TypeScript
+name: East-End
 
 on:
   push:
@@ -25,17 +25,17 @@ jobs:
         run: |
           cd Frontend
           npm install
-     
+
       - name: Build Frontend
         run: |
           cd Frontend
           npm run build
-  
+
       - name: Setup Node.js for Backend
         uses: actions/setup-node@v3
         with:
           node-version: '16'
-  
+
       - name: Install Backend Dependencies
         run: |
           cd Backend
@@ -52,15 +52,25 @@ jobs:
           cd Python_Chatbot
           . venv/bin/activate
           pip install -r requirements.txt
-  
-  deploy:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
 
-    steps:
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Build Docker Image
+        uses: docker/build-push-action@v2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: build
+          context: .
+          dockerfile: Dockerfile
+          push: false
+          tags: ${{ secrets.DOCKER_HUB_USERNAME}}/East-End:latest
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN}}
+
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          dockerfile: Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/East-End:latest
+

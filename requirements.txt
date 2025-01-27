@@ -1,0 +1,6 @@
+Flask
+nltk
+torch
+fuzzywuzzy
+requests
+numpy
