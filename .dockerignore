@@ -1,6 +1,8 @@
 node_modules
+Frontend/node_modules
+Backend/node_modules
 *.log
 *.env
-__pycache__
-.venv
+Python_Chatbot/__pycache__
+Python_Chatbot/venv/
 .git
