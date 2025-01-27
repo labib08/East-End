@@ -22,6 +22,14 @@ COPY Backend/ ./
 
 # Stage 4: Combine and set up the final production image
 FROM python:3.9
+
+# Install Node.js (needed for React build and Node.js backend)
+RUN apt-get update && apt-get install -y \
+    nodejs \
+    npm \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 # Copy React build
@@ -41,11 +49,9 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # Expose ports for Flask and Node.js
 EXPOSE 4000 5000
 
-# Define health checks for Flask and Node.js
+# Combine health checks for Flask and Node.js
 HEALTHCHECK --interval=30s --timeout=10s \
-  CMD curl -f http://localhost:5000/health || exit 1
-HEALTHCHECK --interval=30s --timeout=10s \
-  CMD curl -f http://localhost:4000/health || exit 1
+  CMD curl -f http://localhost:5000/health || curl -f http://localhost:4000/health || exit 1
 
 # Start supervisor to run Flask and Node.js servers
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
