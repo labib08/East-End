@@ -23,7 +23,7 @@ COPY Backend/ ./
 # Stage 4: Combine and set up the final production image
 FROM python:3.9
 
-# Install Node.js (needed for React build and Node.js backend)
+# Install Node.js and npm (needed for React and Node.js backend)
 RUN apt-get update && apt-get install -y \
     nodejs \
     npm \
