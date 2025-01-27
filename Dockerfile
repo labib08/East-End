@@ -34,11 +34,18 @@ COPY --from=flask-backend /app/python_chatbot ./python_chatbot
 COPY --from=node-backend /app/backend ./backend
 
 # Install Supervisor to manage processes
-RUN apt-get update && apt-get install -y supervisor && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y supervisor \
+    && rm -rf /var/lib/apt/lists/*
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Expose ports for Flask and Node.js
-EXPOSE 5000 4000
+EXPOSE 4000 5000
+
+# Define health checks for Flask and Node.js
+HEALTHCHECK --interval=30s --timeout=10s \
+  CMD curl -f http://localhost:5000/health || exit 1
+HEALTHCHECK --interval=30s --timeout=10s \
+  CMD curl -f http://localhost:4000/health || exit 1
 
 # Start supervisor to run Flask and Node.js servers
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

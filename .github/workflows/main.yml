@@ -16,38 +16,34 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: Set up Node.js for Frontend
         uses: actions/setup-node@v3
         with:
           node-version: 16
 
-      - name: Install Frontend Dependencies
+      - name: Install and Build Frontend
         run: |
           cd Frontend
           npm install
-
-      - name: Build Frontend
-        run: |
-          cd Frontend
           npm run build
 
-      - name: Setup Node.js for Backend
+      - name: Set up Node.js for Backend
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: 16
 
       - name: Install Backend Dependencies
         run: |
           cd Backend
           npm install
 
-      - name: Set up Virtual Environment for Flask Backend
+      - name: Set up Python Virtual Environment for Flask Backend
         run: |
           cd Python_Chatbot
           python -m venv venv
           . venv/bin/activate
 
-      - name: Install Python Backend Dependencies
+      - name: Install Flask Backend Dependencies
         run: |
           cd Python_Chatbot
           . venv/bin/activate
@@ -59,18 +55,18 @@ jobs:
           context: .
           dockerfile: Dockerfile
           push: false
-          tags: ${{ secrets.DOCKER_HUB_USERNAME}}/east-end:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/east-end:latest
+
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN}}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: Push to Docker Hub
+      - name: Push Docker Image to Docker Hub
         uses: docker/build-push-action@v2
         with:
           context: .
           dockerfile: Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/east-end:latest
-
