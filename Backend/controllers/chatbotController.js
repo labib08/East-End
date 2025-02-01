@@ -57,7 +57,7 @@ const handleOrderChat = async (req, res) => {
 const handleChat = async(req, res) => {
     try {
         const userMessage = req.body.message;
-        const response = await axios.post('http://127.0.0.1:4000/chat', { message: userMessage });
+        const response = await axios.post('https://east-end-chatbot.onrender.com/chat', { message: userMessage });
         res.json(response.data);
     } catch (error) {
         console.error(error.message);
