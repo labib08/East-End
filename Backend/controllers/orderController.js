@@ -39,7 +39,7 @@ const getOrderDetails = async(req, res) => {
 }
 
 const placeOrder = async(req, res) => {
-    const url = "http://localhost:3000"
+    const url = "https://east-end.onrender.com"
     const {selectedTable, formData} = req.body;
     let newOrder;
 

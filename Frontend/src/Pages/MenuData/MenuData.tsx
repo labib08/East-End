@@ -13,7 +13,7 @@ interface MenuItem {
 
 
 const MenuData: React.FC = () => {
-  const url = "http://localhost:5000";
+  const url = "https://east-end-backend.onrender.com";
   const [menuList, setMenuList] = useState<MenuItem[]>([]);
   const getMenuItem = async () => {
     const response = await axios.get(`${url}/api/item/list`);

@@ -40,9 +40,9 @@ model = NeuralNet(input_size, hidden_size, output_size).to(device)
 model.load_state_dict(model_state)
 model.eval()
 
-BACKEND_URL_CHATBOT = "http://localhost:5000/api/chatbot/orders"
+BACKEND_URL_CHATBOT = "https://east-end-backend.onrender.com/api/chatbot/orders"
 
-BACKEND_URL_ORDERS = "http://localhost:5000/api/item/list"
+BACKEND_URL_ORDERS = "https://east-end-backend.onrender.com/api/item/list"
 
 name_id_dict = {}
 name_mapping_dict ={}

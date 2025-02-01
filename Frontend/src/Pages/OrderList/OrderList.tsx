@@ -40,7 +40,7 @@ interface Order {
 }
 const OrderList: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
-  const url = "http://localhost:5000";
+  const url = "https://east-end-backend.onrender.com";
 
   const fetchAllOrders = async () => {
     const response = await axios.get(`${url}/api/order/listorders`)

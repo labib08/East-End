@@ -9,7 +9,7 @@ interface FormData {
   password: string;
 }
 const SignUp: React.FC = () => {
-  const url = "http://localhost:5000";
+  const url = "https://east-end-backend.onrender.com";
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',

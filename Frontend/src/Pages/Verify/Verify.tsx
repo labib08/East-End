@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const Verify: React.FC = () => {
-    const url = "http://localhost:5000";
+    const url = "https://east-end-backend.onrender.com";
     const token = localStorage.getItem('token');
     const [search] = useSearchParams();
     const success = search.get("success");

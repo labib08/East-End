@@ -11,7 +11,7 @@ interface AddedItem {
 }
 
 const AddItems: React.FC = () => {
-  const url = "http://localhost:5000";
+  const url = "https://east-end-backend.onrender.com";
   const [image, setImage] = useState<File | null>(null);
   const [addedItem, setAddedItem] = useState<AddedItem>({
     name: "",

@@ -12,7 +12,7 @@ export const Navbar: React.FC = () => {
   const token = localStorage.getItem('token');
   const [cartCount, setCartCount] = useState<number>(0);
   const location = useLocation();
-  const url = "http://localhost:5000";
+  const url = "https://east-end-backend.onrender.com";
   const navigate = useNavigate();
   const [page, setPage] = useState<string>('home');
   const [isAdmin, setIsAdmin] = useState<boolean>(false);

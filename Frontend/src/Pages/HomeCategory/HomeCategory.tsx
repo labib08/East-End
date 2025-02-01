@@ -18,7 +18,7 @@ interface Items {
 
 const HomeCategory: React.FC<Props> = ({category}: Props) => {
   const token = localStorage.getItem('token');
-  const url = "http://localhost:5000";
+  const url = "https://east-end-backend.onrender.com";
   const [itemData, setItemData] = useState<Items[]>([]);
 
   const [cartItems, setCartItems] = useState<Record<string, number>>(() => {

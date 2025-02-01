@@ -18,7 +18,7 @@ interface Items {
 type OrderItem = Items & { quantity: number };
 
 const Chatbot: React.FC = () => {
-  const url = "http://localhost:5000";
+  const url = "https://east-end-backend.onrender.com";
   const navigate = useNavigate();
   const firstMessage: Message = { text: "Would you like to order?", sender: 'bot' };
   const token = localStorage.getItem('token');

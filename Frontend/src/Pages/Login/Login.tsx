@@ -8,7 +8,7 @@ interface FormData {
     password: string;
   }
 const Login: React.FC = () => {
-    const url = "http://localhost:5000";
+    const url = "https://east-end-backend.onrender.com";
     //const [token, setToken] = useState<string>("")
     const navigate = useNavigate();
     const [formData, setFormData] = useState<FormData>({

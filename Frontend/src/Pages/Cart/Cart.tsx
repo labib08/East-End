@@ -25,7 +25,7 @@ interface Props {
 }
 const Cart: React.FC<Props> = ({itemData, addToCart, removeFromCart, cartItems, setCartItems, getTotal}: Props) => {
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
-  const url = "http://localhost:5000";
+  const url = "https://east-end-backend.onrender.com";
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
   useEffect(() => {

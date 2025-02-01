@@ -27,7 +27,7 @@ const Order = () => {
   const handleTableChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedTable(e.target.value);
   };
-  const url = "http://localhost:5000";
+  const url = "https://east-end-backend.onrender.com";
   const [formData, setFormData] = useState<Information>({
     firstName:"",
     lastName: "",

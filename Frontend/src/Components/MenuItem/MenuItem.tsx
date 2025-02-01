@@ -17,7 +17,7 @@ interface Props{
     setCartItems: React.Dispatch<React.SetStateAction<CartItems>>;
 }
 const MenuItem = ({id, name, image, price, description, addToCart, removeFromCart, cartItems, setCartItems}: Props) => {
-  const url = "http://localhost:5000";
+  const url = "https://east-end-backend.onrender.com";
   return (
     <div className=" w-full mx-auto rounded-[15px] shadow-[0px_0px_10px_#00000015] min-h-[480px] flex flex-col transition-[all_0.4s] fade-in">
         <div className="w-full rounded-t-[15px]">
